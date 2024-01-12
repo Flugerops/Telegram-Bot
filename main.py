@@ -15,7 +15,6 @@ load_dotenv()
 print(getenv("TOKEN"))
 TOKEN = getenv("TOKEN")
 
-print('I add commit!')
 
 dp = Dispatcher()
 
