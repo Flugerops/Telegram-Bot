@@ -28,8 +28,8 @@ async def command_start_handler(message: Message) -> None:
 
 
 @dp.message(Command("Talk"))
-async def send_message(message: Message) -> None:
-    await Bot.send_message(self=Bot, chat_id=message.chat.id, text="Hello")
+async def send_message(message: Message):
+    await message.answer("Hello i`m stupid bot")
 
 
 async def main() -> None:
