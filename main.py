@@ -28,9 +28,16 @@ async def command_start_handler(message: Message) -> None:
 
 
 @dp.message(Command("Talk"))
-async def send_message(message: Message):
+async def send_message(message: Message) -> None:
     await message.answer("Hello i`m stupid bot")
 
+@dp.message(Command("dice"))
+async def send_dice(message: Message) -> None:
+    await message.answer_dice("🎲")
+
+@dp.message(Command("casino"))
+async def send_casion(message: Message) -> None:
+    await message.answer_dice("🎰")
 
 async def main() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
