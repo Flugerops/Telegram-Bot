@@ -10,23 +10,44 @@ from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.utils.markdown import hbold
+from aiogram.filters import Command
+from all_comands import command_list
+import random
+import imeges 
 
 load_dotenv()
 print(getenv("TOKEN"))
 TOKEN = getenv("TOKEN")
 
-print('I add commit!')
-print('I add commit!!!!!')
-
 
 dp = Dispatcher()
 
 
-@dp.message(CommandStart())
-async def command_start_handler(message: Message) -> None:
 
-    await message.answer(f"Hello, {hbold(message.from_user.full_name)}!")
+@dp.message(Command("talk"))
+async def send_message(message: Message) -> None:
+    await message.answer("Hello i`m stupid bot")
 
+@dp.message(Command("dice"))
+async def send_dice(message: Message) -> None:
+    await message.answer_dice("🎲")
+
+@dp.message(Command("casino"))
+async def send_casion(message: Message) -> None:
+    await message.answer_dice("🎰")
+
+
+@dp.message(Command("developers"))
+async def send_casion(message: Message) -> None:
+    await message.answer("I Have 3 developers")
+    await message.answer_contact(phone_number='+380 66 383 11 17', first_name='Nazar')
+    await message.answer_contact(phone_number='+380 97 693 81 92', first_name='Bogdan')
+    await message.answer_contact(phone_number='+380 98 019 58 11', first_name='Leonid')
+
+
+@dp.message(Command('allcommands'))
+async def send_all_comands(message: Message) -> None:
+    await message.reply(command_list)
 
 @dp.message()
 async def echo_handler(message: types.Message) -> None:
