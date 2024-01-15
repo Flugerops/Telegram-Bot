@@ -8,12 +8,13 @@ from os import getenv
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
-from aiogram.types import Message
+from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.markdown import hbold
 from aiogram.filters import Command
-from all_comands import command_list
+from dif_func import command_list
 import random
-import imeges 
+
+
 
 load_dotenv()
 print(getenv("TOKEN"))
@@ -48,6 +49,15 @@ async def send_casion(message: Message) -> None:
 @dp.message(Command('allcommands'))
 async def send_all_comands(message: Message) -> None:
     await message.reply(command_list)
+
+
+
+@dp.message(Command('teamgithub'))
+async def send_all_comands(message: types.Message) -> None:
+    await message.reply(text="It's Team - GitHub\nhttps://github.com/Flugerops/Telegram-Bot")
+
+
+
 
 @dp.message()
 async def echo_handler(message: types.Message) -> None:
