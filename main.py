@@ -46,7 +46,9 @@ async def send_casion(message: Message) -> None:
 async def echo(message: Message):
     temp_msg = message.text.lower()
     if temp_msg == "commands":
-        await message.answer("Your commands: ", reply_markup=keyboard.coom_kb)
+        await message.answer("Your commands: ", reply_markup=keyboard.comm_kb)
+    if temp_msg == "our team":
+        await message.answer("Zmiini_Novatori", reply_markup=keyboard.team_kb)
 
 async def main() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
