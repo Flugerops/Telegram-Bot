@@ -20,12 +20,12 @@ TOKEN = getenv("TOKEN")
 inline_keyboard = InlineKeyboardMarkup(row_width=3)
 
 
-button1 = InlineKeyboardButton("Button 1", callback_data="button1")
-button2 = InlineKeyboardButton("Button 2", callback_data="button2")
-button3 = InlineKeyboardButton("Button 3", callback_data="button3")
-button4 = InlineKeyboardButton("Button 4", callback_data="button4")
-button5 = InlineKeyboardButton("Button 5", callback_data="button5")
-button6 = InlineKeyboardButton("Button 6", callback_data="button6")
+button1 = InlineKeyboardButton("Button 1")
+button2 = InlineKeyboardButton("Button 2")
+button3 = InlineKeyboardButton("Button 3")
+button4 = InlineKeyboardButton("Button 4")
+button5 = InlineKeyboardButton("Button 5")
+button6 = InlineKeyboardButton("Button 6")
 
 inline_keyboard.add(button1, button2, button3)
 inline_keyboard.add(button4, button5, button6)
