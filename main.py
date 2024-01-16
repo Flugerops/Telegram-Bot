@@ -45,6 +45,7 @@ async def send_casion(message: Message) -> None:
 @dp.message(Command("ourteam"))
 async def send_casion(message: Message) -> None:
     await message.answer("Zmiini_Novatori", reply_markup=keyboard.team_kb)
+
 @dp.message()
 async def echo(message: Message):
     temp_msg = message.text.lower()

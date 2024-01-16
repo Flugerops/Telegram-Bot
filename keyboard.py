@@ -18,6 +18,9 @@ comm_kb = ReplyKeyboardMarkup(keyboard=[
     ],
     [
         KeyboardButton(text="/die")
+    ],
+    [   
+        KeyboardButton(text="/ourteam")
     ]
 ],  resize_keyboard=True, input_field_placeholder="Your commands", one_time_keyboard=True)
 
