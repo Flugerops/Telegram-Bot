@@ -17,7 +17,7 @@ comm_kb = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text="/casino")
     ],
     [
-        KeyboardButton(text="/die")
+        KeyboardButton(text="/dice")
     ],
     [   
         KeyboardButton(text="/ourteam")

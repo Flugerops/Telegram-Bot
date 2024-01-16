@@ -34,7 +34,7 @@ async def command_start_handler(message: Message) -> None:
 async def send_message(message: Message) -> None:
     await message.answer("Hello I`m a stupid bot")
 
-@dp.message(Command("die"))
+@dp.message(Command("dice"))
 async def send_dice(message: Message) -> None:
     await message.answer_dice("🎲")
 
