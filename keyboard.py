@@ -3,10 +3,13 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardBut
 kb = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="Commands")
+    ],
+    [
+        KeyboardButton(text="Our team")
     ]
 ], resize_keyboard=True, input_field_placeholder="Choose option")
 
-coom_kb = ReplyKeyboardMarkup(keyboard=[
+comm_kb = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="/talk")
     ],
@@ -17,3 +20,9 @@ coom_kb = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text="/dice")
     ]
 ],  resize_keyboard=True, input_field_placeholder="Your commands", one_time_keyboard=True)
+
+team_kb = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="Our project link", url="https://github.com/Flugerops/Telegram-Bot")
+    ]
+])
