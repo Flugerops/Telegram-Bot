@@ -8,15 +8,64 @@ from os import getenv
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
-from aiogram.types import Message
+from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.markdown import hbold
-
+from aiogram.filters import Command
+# from dif_unc import command_list
+import random
 load_dotenv()
 print(getenv("TOKEN"))
 TOKEN = getenv("TOKEN")
 
+inline_keyboard = InlineKeyboardMarkup(row_width=3)
+
+
+button1 = InlineKeyboardButton("Button 1", callback_data="button1")
+button2 = InlineKeyboardButton("Button 2", callback_data="button2")
+button3 = InlineKeyboardButton("Button 3", callback_data="button3")
+button4 = InlineKeyboardButton("Button 4", callback_data="button4")
+button5 = InlineKeyboardButton("Button 5", callback_data="button5")
+button6 = InlineKeyboardButton("Button 6", callback_data="button6")
+
+inline_keyboard.add(button1, button2, button3)
+inline_keyboard.add(button4, button5, button6)
+
+
 
 dp = Dispatcher()
+
+
+
+@dp.message(button1)
+async def send_message(message: Message) -> None:
+    await message.answer("Hello I`m a stupid bot")
+
+@dp.message(button2)
+async def send_dice(message: Message) -> None:
+    await message.answer_dice("🎲")
+
+@dp.message(button3)
+async def send_casion(message: Message) -> None:
+    await message.answer_dice("🎰")
+
+
+@dp.message(button4)
+async def send_casion(message: Message) -> None:
+    await message.answer("I Have 3 developers")
+    await message.answer_contact(phone_number='+380 66 383 11 17', first_name='Nazar')
+    await message.answer_contact(phone_number='+380 97 693 81 92', first_name='Bogdan')
+    await message.answer_contact(phone_number='+380 98 019 58 11', first_name='Leonid')
+
+
+# @dp.message(Command('allcommands'))
+# async def send_all_comands(message: Message) -> None:
+    # await message.reply(command_list)
+
+
+
+@dp.message(button5)
+async def send_all_comands(message: types.Message) -> None:
+    await message.reply(text="It's Team - GitHub\nhttps://github.com/Flugerops/Telegram-Bot")
 
 
 @dp.message(CommandStart())
