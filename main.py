@@ -36,20 +36,20 @@ dp = Dispatcher()
 
 
 
-@dp.message(button1)
+@dp.message(Command(button1))
 async def send_message(message: Message) -> None:
     await message.answer("Hello I`m a stupid bot")
 
-@dp.message(button2)
+@dp.message(Command(button2))
 async def send_dice(message: Message) -> None:
     await message.answer_dice("🎲")
 
-@dp.message(button3)
+@dp.message(Command(button3))
 async def send_casion(message: Message) -> None:
     await message.answer_dice("🎰")
 
 
-@dp.message(button4)
+@dp.message(Command(button4))
 async def send_casion(message: Message) -> None:
     await message.answer("I Have 3 developers")
     await message.answer_contact(phone_number='+380 66 383 11 17', first_name='Nazar')
@@ -63,7 +63,7 @@ async def send_casion(message: Message) -> None:
 
 
 
-@dp.message(button5)
+@dp.message(Command(button5))
 async def send_all_comands(message: types.Message) -> None:
     await message.reply(text="It's Team - GitHub\nhttps://github.com/Flugerops/Telegram-Bot")
 
