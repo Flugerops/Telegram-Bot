@@ -37,29 +37,26 @@ async def english(message: Message) -> None:
     await message.answer("Натисніть на тему: ", reply_markup=keyboard.themes_kb)
 
 
-# @dp.message(Command('allcommands'))
-# async def all_commands_list(message:Message) -> None:
-#     await message.answer(commands_list.english_functions)
+# ОБРОБНИК КНОПКИ ПОЧАТКОВІ СЛОВА
+@dp.message(lambda message: message.text == 'Початкові слова 💪')
+async def send_dict_start_w(message: types.Message):
+    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.start_words.items()])
+    await message.answer(formatted_dict, parse_mode=ParseMode.MARKDOWN)
 
-# @dp.message(Command('startwords'))
-# async def start_w(message: Message) -> None:
-#     await message.answer(words.start_words)
 
-# @dp.message(Command('random'))
-# async def random_w(message: Message) -> None:
-#     await message.answer(random.choice(words))
+# ОБРОБНИК КНОПКИ ПОДОРОЖ
+@dp.message(lambda message: message.text == 'Cлова На Тему Подорож ✈️')
+async def send_dict_trip_w(message: types.Message):
+    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.trip_words.items()])
+    await message.answer(formatted_dict, parse_mode=ParseMode.MARKDOWN)
 
-# @dp.message(Command('foodwords'))
-# async def food_w(message: Message) -> None:
-#     await message.answer(words.food_words)
 
-# @dp.message(Command('tripwords'))
-# async def trip_w(message: Message) -> None:
-#     await message.answer(words.trip_words)
+# ОБРОБНИК КНОПКИ ЇЖА
+@dp.message(lambda message: message.text == 'Слова На Тему Їжа 🍌')
+async def send_dict_trip_w(message: types.Message):
+    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.food_words.items()])
+    await message.answer(formatted_dict, parse_mode=ParseMode.MARKDOWN)
 
-# @dp.message(Command('conversationwords'))
-# async def conversation_w(message: Message) -> None:
-#     await message.answer(words.conversation_words)
 
 @dp.message()
 async def echo(message: Message):

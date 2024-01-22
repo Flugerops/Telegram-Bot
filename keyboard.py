@@ -17,14 +17,37 @@ language_kb = ReplyKeyboardMarkup(keyboard=[
 
 themes_kb = ReplyKeyboardMarkup(keyboard=[
     [
-        KeyboardButton(text="/Початкові слова")
+        KeyboardButton(text="Початкові слова 💪")
     ],
+    
     [
-        KeyboardButton(text="/Cлова для подорожі")
+        KeyboardButton(text="Cлова На Тему Подорож ✈️")
     ],
+    
     [
-        KeyboardButton(text="/Cлова для розмови")
+        KeyboardButton(text="Cлова На Тему Розмова 🗣")
+    ],
+    
+    [
+        KeyboardButton(text="Слова На Тему Кольори 🟣")
+    ],
+    
+    [
+        KeyboardButton(text='Слова На Тему Їжа 🍌')
+    ],
+
+    [
+        KeyboardButton(text= "Слова На Тему Тварини 🐍")
+    ],
+    
+    [
+        KeyboardButton(text="Слова На Тему Айті 💻")
+    ],
+    
+    [
+        KeyboardButton(text="Слова На Тему Школа 🏫")
     ]
+
 ], resize_keyboard=True, input_field_placeholder="Виберіть тему")
 
 comm_kb = ReplyKeyboardMarkup(keyboard=[
