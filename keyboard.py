@@ -1,23 +1,46 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 
+
+
 kb = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="Команди")
     ],
     [
-        KeyboardButton(text="Наша команда")
+        KeyboardButton(text="Наша Команда")
     ]
-], resize_keyboard=True, input_field_placeholder="Виберіть опцію")
+], resize_keyboard=True, input_field_placeholder="Виберіть Опцію")
 
 language_kb = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="/Англійська🇬🇧")
     ]
-], resize_keyboard=True, input_field_placeholder="Виберіть мову")
+], resize_keyboard=True, input_field_placeholder="Виберіть Мову")
+
+
+user_mode_choise = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton(text="Слова По Темам")
+    ],
+
+    [
+        KeyboardButton(text='Вгадай Переклад Слова')
+    ],
+
+    [
+        KeyboardButton(text='Поради')
+    ],
+
+    [
+        KeyboardButton(text='Часи')
+    ]
+], resize_keyboard=True, input_field_placeholder="Виберіть Мод")
+
+
 
 themes_kb = ReplyKeyboardMarkup(keyboard=[
     [
-        KeyboardButton(text="Початкові слова 💪")
+        KeyboardButton(text="Початкові Слова 💪")
     ],
     
     [
@@ -25,7 +48,7 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
     ],
     
     [
-        KeyboardButton(text="Cлова На Тему Розмова 🗣")
+        KeyboardButton(text="Слова На Тему Їжа 🍌")
     ],
     
     [
@@ -33,7 +56,7 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
     ],
     
     [
-        KeyboardButton(text='Слова На Тему Їжа 🍌')
+        KeyboardButton(text='Cлова На Тему Розмова 🗣')
     ],
 
     [
@@ -48,7 +71,8 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text="Слова На Тему Школа 🏫")
     ]
 
-], resize_keyboard=True, input_field_placeholder="Виберіть тему")
+], resize_keyboard=True, input_field_placeholder="Виберіть Тему")
+
 
 comm_kb = ReplyKeyboardMarkup(keyboard=[
     [

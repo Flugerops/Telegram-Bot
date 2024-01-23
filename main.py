@@ -48,14 +48,48 @@ async def send_dict_start_w(message: types.Message):
 @dp.message(lambda message: message.text == 'Cлова На Тему Подорож ✈️')
 async def send_dict_trip_w(message: types.Message):
     formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.trip_words.items()])
-    await message.answer(formatted_dict, parse_mode=ParseMode.MARKDOWN)
+    await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN)
 
 
 # ОБРОБНИК КНОПКИ ЇЖА
 @dp.message(lambda message: message.text == 'Слова На Тему Їжа 🍌')
 async def send_dict_trip_w(message: types.Message):
     formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.food_words.items()])
-    await message.answer(formatted_dict, parse_mode=ParseMode.MARKDOWN)
+    await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN)
+
+# ОБРОБНИК КНОПКИ КОЛЬОРИ
+@dp.message(lambda message: message.text == 'Слова На Тему Кольори 🟣')
+async def send_dict_colors_w(message: types.Message):
+    formatted_dict = '\n'.join([f'{word} - {translation}' for word, translation in words.colors_words.items()])
+    await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN)
+
+
+# ОБРОБНИК КНОПКИ РОЗМОВА
+@dp.message(lambda message: message.text == 'Cлова На Тему Розмова 🗣')
+async def send_dict_conversation_w(message: types.Message):
+    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.conversation_words.items()])
+    await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN)
+    
+
+# ОБРОБНИК КНОПКИ ТВАРИНИ
+@dp.message(lambda message: message.text == 'Слова На Тему Тварини 🐍')
+async def send_dict_animals_w(message: types.Message):
+    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.animals_theme_words.items()])
+    await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN)
+
+
+# ОБРОБНИК КНОПКИ АЙТІ
+@dp.message(lambda message: message.text == 'Слова На Тему Айті 💻')
+async def send_dict_it_w(message: types.Message):
+    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.it_words.items()])
+    await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN)
+
+
+# ОБРОБНИК КНОПКИ ШКОЛА 
+@dp.message(lambda message: message.text == 'Слова На Тему Школа 🏫')
+async def send_dict_school_w(message: types.Message):
+    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.school_words.items()])
+    await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN)
 
 
 @dp.message()
