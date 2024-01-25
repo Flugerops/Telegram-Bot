@@ -4,70 +4,53 @@ import asyncio
 import logging
 import sys
 import random
+import openai
 
-from aiogram import Bot, Dispatcher, Router, types
+from aiogram import Bot, Dispatcher, F, Router, types
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.utils.markdown import hbold
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
 from aiogram.filters import Command
 from aiogram.methods import send_message
+from aiogram.fsm.storage.memory import MemoryStorage
 
 from data import commands_list, words
 import keyboard
 from data import words
 
 load_dotenv()
-print(getenv("TOKEN"))
 TOKEN = getenv("TOKEN")
+CHAT_GPT_TOKEN = getenv("CHATGPT_TOKEN")
+storage = MemoryStorage()
+
+form_router = Router()
 
 
-dp = Dispatcher()
+dp = Dispatcher(storage=storage)
 
-
+class GPTFSM(StatesGroup):
+    idle = State()
+    
 @dp.message(CommandStart())
-async def command_start_handler(message: Message) -> None:
-    await message.answer(f"Привіт, {hbold(message.from_user.full_name)}!", reply_markup=keyboard.language_kb)
-    await message.answer("Я буду допомогати вивчати тобі різні мови")
-@dp.message(Command("language"))
-async def choose_language(message: Message) -> None:
-    await message.answer("Це мови які доступні для навчання: ", reply_markup=keyboard.language_kb)
-@dp.message(Command("Англійська🇬🇧"))
-async def english(message: Message) -> None:
-    await message.answer("Натисніть на тему: ", reply_markup=keyboard.themes_kb)
+async def start(message: Message, state: FSMContext):
+    await message.answer("Hello i am Zmiini Novatory AI, just ask a question and i`l help you")
+    await state.set_state(GPTFSM.idle)
+    
+@form_router.message(GPTFSM.idle)
+async def response(message: Message, state: FSMContext):
+    responce = await ai_answer(message.text)
+    await message.answer(responce)
+    await state.finish()
 
-
-# @dp.message(Command('allcommands'))
-# async def all_commands_list(message:Message) -> None:
-#     await message.answer(commands_list.english_functions)
-
-# @dp.message(Command('startwords'))
-# async def start_w(message: Message) -> None:
-#     await message.answer(words.start_words)
-
-# @dp.message(Command('random'))
-# async def random_w(message: Message) -> None:
-#     await message.answer(random.choice(words))
-
-# @dp.message(Command('foodwords'))
-# async def food_w(message: Message) -> None:
-#     await message.answer(words.food_words)
-
-# @dp.message(Command('tripwords'))
-# async def trip_w(message: Message) -> None:
-#     await message.answer(words.trip_words)
-
-# @dp.message(Command('conversationwords'))
-# async def conversation_w(message: Message) -> None:
-#     await message.answer(words.conversation_words)
-
-@dp.message()
-async def echo(message: Message):
-    temp_msg = message.text.lower()
-    if temp_msg == "commands":
-        await message.answer("Your commands: ", reply_markup=keyboard.comm_kb)
-    if temp_msg == "our team":
-        await message.answer("Zmiini_Novatori", reply_markup=keyboard.team_kb)
+async def ai_answer(promt:str) -> str:
+    answer = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role":"user", "content":promt}]
+    )
+    return answer.choices[0].message.content
 
 async def main() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
