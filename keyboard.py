@@ -13,12 +13,12 @@ kb = ReplyKeyboardMarkup(keyboard=[
 
 language_kb = ReplyKeyboardMarkup(keyboard=[
     [
-        KeyboardButton(text="/Англійська🇬🇧")
+        KeyboardButton(text="Англійська🇬🇧")
     ]
 ], resize_keyboard=True, input_field_placeholder="Виберіть Мову")
 
 
-user_mode_choise = ReplyKeyboardMarkup(keyboard=[
+user_mode_choice = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="Слова По Темам")
     ],
@@ -31,12 +31,14 @@ user_mode_choise = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text='Поради')
     ],
 
-    [
-        KeyboardButton(text='Часи')
-    ]
 ], resize_keyboard=True, input_field_placeholder="Виберіть Мод")
 
+start_quiz = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton(text="Почати квіз")
+    ]
 
+], resize_keyboard=True, input_field_placeholder="Натисніть коли готові")
 
 themes_kb = ReplyKeyboardMarkup(keyboard=[
     [
@@ -69,9 +71,17 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
     
     [
         KeyboardButton(text="Слова На Тему Школа 🏫")
+    ],
+
+    [
+        KeyboardButton(text='Слова На Тему Спорт ⚽️')
+    ],
+
+    [
+        KeyboardButton(text='Слова На Тему Музика🎵')
     ]
 
-], resize_keyboard=True, input_field_placeholder="Виберіть Тему")
+], resize_keyboard=True, input_field_placeholder="Виберіть Тему", one_time_keyboard=True)
 
 
 comm_kb = ReplyKeyboardMarkup(keyboard=[
