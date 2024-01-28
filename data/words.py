@@ -245,3 +245,103 @@ music_word = {
     "DJ": "діджей",
     "soundtrack": "саундтрек"
 }
+
+
+house_words = {
+    "apartment": "квартира",
+    "living room": "вітальня",
+    "bedroom": "спальня",
+    "kitchen": "кухня",
+    "bathroom": "ванна кімната",
+    "balcony": "балкон",
+    "furniture": "меблі",
+    "bed": "ліжко",
+    "sofa": "диван",
+    "table": "стіл",
+    "chair": "стілець",
+    "wardrobe": "шафа",
+    "window": "вікно",
+    "door": "двері",
+    "floor": "підлога",
+    "ceiling": "стеля",
+    "lamp": "лампа",
+    "mirror": "дзеркало",
+    "carpet": "ковер",
+    "heating": "опалення",
+    "air conditioning": "кондиціонер",
+    "rent": "оренда",
+    "neighbor": "сусід",
+    "utilities": "комунальні послуги"
+}
+
+
+job_words = {
+    "job": "робота",
+    "employer": "роботодавець",
+    "employee": "співробітник",
+    "office": "офіс",
+    "colleague": "колега",
+    "boss": "керівник",
+    "workplace": "робоче місце",
+    "meeting": "зустріч",
+    "deadline": "строк виконання",
+    "salary": "зарплата",
+    "promotion": "продвиження",
+    "resume": "резюме",
+    "interview": "співбесіда",
+    "work hours": "години роботи",
+    "overtime": "переробка",
+    "job satisfaction": "задоволеність роботою",
+    "career": "кар'єра",
+    "skills": "навички",
+    "training": "навчання",
+    "work-life balance": "баланс роботи та особистого життя",
+    "telecommuting": "телекомутація",
+    "benefits": "переваги",
+    "retirement": "виходження на пенсію",
+    "vacation": "відпустка"
+}
+
+film_words = {
+    "movies": "фільми",
+    "genre": "жанр",
+    "director": "режисер",
+    "actor": "актор",
+    "actress": "акторка",
+    "script": "сценарій",
+    "scene": "сцена",
+    "plot": "сюжет",
+    "cinematography": "кінематографія",
+    "soundtrack": "саундтрек",
+    "award": "нагорода",
+    "premiere": "прем'єра",
+    "sequel": "продовження",
+    "animation": "анімація",
+    "box office": "касова збірка",
+    "critic": "критик",
+    "rating": "рейтинг"
+}
+
+
+fasion_words = {
+    "fashion": "мода",
+    "style": "стиль",
+    "designer": "дизайнер",
+    "clothing": "одяг",
+    "accessories": "аксесуари",
+    "trend": "тренд",
+    "runway": "пасерин",
+    "couture": "вишуканий одяг",
+    "haute couture": "вища мода",
+    "brand": "бренд",
+    "model": "модель",
+    "fabric": "тканина",
+    "sewing": "шиття",
+    "wardrobe": "гардероб",
+    "makeup": "макіяж",
+    "style icon": "ікона стилю",
+    "fashion show": "показ мод",
+    "street style": "міський стиль",
+    "vogue": "вог",
+    "editorial": "редакційний матеріал"
+}

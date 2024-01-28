@@ -78,7 +78,23 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
     ],
 
     [
-        KeyboardButton(text='Слова На Тему Музика🎵')
+        KeyboardButton(text='Слова На Тему Музика 🎵')
+    ],
+
+    [
+        KeyboardButton(text= 'Cлова На Тему Квартира 🏘')
+    ],
+
+    [
+        KeyboardButton(text='Слова На Тему Робота 💼')
+    ],
+
+    [
+        KeyboardButton(text='Слова На Тему Фільми 🎬')
+    ],
+
+    [
+        KeyboardButton(text='Слова На Тему Мода 💄')
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Тему", one_time_keyboard=True)
