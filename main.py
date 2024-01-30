@@ -16,9 +16,11 @@ from aiogram.filters import Command
 from aiogram.methods import send_message
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
-from data import words
+
 import keyboard
-from data import words
+from data import words, words_themes
+
+
 
 
 load_dotenv()
@@ -50,16 +52,6 @@ async def quiz(message: Message, state: FSMContext):
     await message.reply(f"Напишіть переклад слова: {random_word[0]}")    
     await state.update_data(translation=random_word)
     await state.set_state(Quiz.translation)  
-
-
-# async def quiz(message: Message, state: FSMContext):
-#     random_word = random.choice(list(words.start_words.items()))
-#     await message.reply(f"Напишіть переклад слова: {random_word[0]}")
-#     async def echo(message: Message):          
-#         if message.text.lower() == random_word[1]:
-#             await message.reply("Ти відповів правильно.")
-#         else:
-#             await message.reply(f"Ти помилився, переклад: {random_word[1]}")
     
 
 @dp.message(Quiz.translation)
