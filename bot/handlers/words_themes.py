@@ -6,14 +6,11 @@ from ..keyboards import keyboard
 router = Router()
 
 
-@router.message(F.text == 'Hello')
-async def kkk(message: types.Message):
-    await message.reply("Hello")
+
 
 # ОБРОБНИК КНОПКИ ПОЧАТКОВІ СЛОВА (ЗА ТЕМАМИ)
 @router.message(F.text.contains('Початкові Слова'))
 async def send_dict_start_w(message: types.Message):
-    print("hello")
     formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.start_words.items()])
     await message.answer(formatted_dict, parse_mode=ParseMode.MARKDOWN)
 
@@ -110,21 +107,3 @@ async def send_dict_school_w(message: types.Message):
     formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.job_words.items()])
     await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN)
 
-@router.message(F.text.contains('Вийти'))
-async def exit_menu(message: types.Message):
-    await message.answer("Виберіть мод: ", reply_markup=keyboard.user_mode_choice)
-
-
-
-@router.message()
-async def echo(message: types.Message):
-    print(echo)
-    temp_msg = message.text.casefold()
-    if temp_msg == "commands":
-        await message.answer("Your commands: ", reply_markup=keyboard.comm_kb)
-    if temp_msg == "our team":
-        await message.answer("Zmiini_Novatori", reply_markup=keyboard.team_kb)
-    if temp_msg == "слова по темам":
-        await message.answer("Виберіть тему:",reply_markup=keyboard.themes_kb)
-    if temp_msg == "вгадай переклад слова":
-        await message.answer("Натисніть коли готові:",reply_markup=keyboard.start_quiz)
