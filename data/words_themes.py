@@ -1,5 +1,5 @@
 from main import dp, types, ParseMode
-import words
+from data import words
 
 
 
