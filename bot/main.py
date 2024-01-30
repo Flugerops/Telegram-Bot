@@ -2,7 +2,7 @@ import asyncio
 import logging
 import sys
 
-
+from aiogram.types import ReplyKeyboardRemove
 
 import random
 from aiogram import Bot, Dispatcher,F ,Router, types
@@ -18,13 +18,14 @@ from .keyboards import keyboard
 from .utils.env import TOKEN
 from .utils.states import Quiz
 from .misc import words
-from .handlers import words_themes
+from .handlers import words_themes_router
 
 
 
 
 dp = Dispatcher()
-
+dp.include_router(words_themes_router)
+print(words_themes_router)
 
 
 @dp.message(CommandStart())
@@ -38,12 +39,18 @@ async def english(message: types.Message):
 
 @dp.message(lambda message: message.text == 'Почати квіз')
 async def quiz(message: Message, state: FSMContext):
-    
+
     random_word = random.choice(list(words.start_words.items()))
-    await message.reply(f"Напишіть переклад слова: {random_word[0]}")    
+    await message.reply(f"Напишіть переклад слова: {random_word[0]}", reply_markup=ReplyKeyboardRemove)    
     await state.update_data(translation=random_word)
     await state.set_state(Quiz.translation)  
+
+@dp.message(lambda message: message.text == 'Вийти')
+async def leave_quiz(message: Message, state: FSMContext):
+    await state.clear()
+    await message.answer("Виберіть мод: ", reply_markup=keyboard.user_mode_choice)
     
+
 
 @dp.message(Quiz.translation)
 async def check_translation(message: Message, state: FSMContext):
@@ -56,20 +63,9 @@ async def check_translation(message: Message, state: FSMContext):
     
 
 
-@dp.message()
-async def echo(message: Message, state: FSMContext):
-    temp_msg = message.text.casefold()
-    if temp_msg == "commands":
-        await message.answer("Your commands: ", reply_markup=keyboard.comm_kb)
-    if temp_msg == "our team":
-        await message.answer("Zmiini_Novatori", reply_markup=keyboard.team_kb)
-    if temp_msg == "слова по темам":
-        await message.answer("Виберіть тему:",reply_markup=keyboard.themes_kb)
-    if temp_msg == "вгадай переклад слова":
-        await message.answer("Натисніть коли готові:",reply_markup=keyboard.start_quiz)
-
 async def start() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
     bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
+    
     # And the run events dispatching
     await dp.start_polling(bot)

@@ -36,6 +36,9 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
 start_quiz = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="Почати квіз")
+    ],
+    [
+        KeyboardButton(text="Вийти")
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Натисніть коли готові")
@@ -95,6 +98,9 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
 
     [
         KeyboardButton(text='Слова На Тему Мода 💄')
+    ],
+    [
+        KeyboardButton(text="Вийти")
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Тему", one_time_keyboard=True)
