@@ -1,5 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.filters.callback_data import CallbackData
 
+inline_keyboard_callback = CallbackData("inline_keyboard", "action")
 
 
 kb = ReplyKeyboardMarkup(keyboard=[
@@ -119,8 +121,8 @@ comm_kb = ReplyKeyboardMarkup(keyboard=[
 ],  resize_keyboard=True, input_field_placeholder="Ваші команди", one_time_keyboard=True)
 
 
-team_kb = InlineKeyboardMarkup(inline_keyboard=[
+exit_kb = InlineKeyboardMarkup(inline_keyboard=[
     [
-        InlineKeyboardButton(text="Посилання на наш проєкт", url="https://github.com/Flugerops/Telegram-Bot")
+        InlineKeyboardButton(text="Назад", callback_data=inline_keyboard_callback.new(action="exit"))
     ]
 ])

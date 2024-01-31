@@ -60,10 +60,10 @@ async def check_translation(message: Message, state: FSMContext):
     global incorrect
     print(random_word)
     if message.text.casefold() == random_word[1]:
-        await message.reply("Ти відповів правильно.")
+        await message.reply("Ти відповів правильно.", reply_markup=keyboard.start_quiz)
         correct += 1
     else:
-        await message.reply(f"Ти помилився, переклад: {random_word[1]}")
+        await message.reply(f"Ти помилився, переклад: {random_word[1]}", reply_markup=keyboard.start_quiz)
         incorrect += 1
     
 

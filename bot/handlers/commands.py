@@ -5,6 +5,7 @@ from ..keyboards import keyboard
 
 router = Router()
 
+
 @router.message()
 async def echo(message: types.Message):
     print(echo)
