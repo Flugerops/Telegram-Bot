@@ -25,7 +25,6 @@ from .handlers import words_themes_router, commands_router
 
 dp = Dispatcher()
 
-print(words_themes_router)
 correct = 0
 incorrect = 0
 
@@ -49,7 +48,7 @@ async def quiz(message: Message, state: FSMContext):
 @dp.message(F.text == 'Вийти')
 async def leave_quiz(message: Message, state: FSMContext):
     await state.clear()
-    await message.reply(f"Ви отримали {correct} правильних відповідей і {incorrect} неправильних відповідей.\n Це {correct / incorrect}% правильно.")
+    # await message.reply(f"Ви отримали {correct} правильних відповідей і {incorrect} неправильних відповідей.\n Це {correct / incorrect}% правильно.")
     await message.answer("Виберіть мод: ", reply_markup=keyboard.user_mode_choice)
 
 
