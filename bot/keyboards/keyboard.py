@@ -1,7 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.filters.callback_data import CallbackData
 
-inline_keyboard_callback = CallbackData("inline_keyboard", "action")
 
 
 kb = ReplyKeyboardMarkup(keyboard=[
@@ -123,6 +122,6 @@ comm_kb = ReplyKeyboardMarkup(keyboard=[
 
 exit_kb = InlineKeyboardMarkup(inline_keyboard=[
     [
-        InlineKeyboardButton(text="Назад", callback_data=inline_keyboard_callback.new(action="exit"))
+        InlineKeyboardButton(text="Назад", callback_data="exit")
     ]
 ])
