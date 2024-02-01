@@ -14,6 +14,8 @@ from aiogram.filters import Command
 from aiogram.methods import send_message
 from aiogram.fsm.context import FSMContext
 
+
+
 from .keyboards import keyboard
 from .utils.env import TOKEN
 from .utils.states import Quiz
@@ -48,7 +50,7 @@ async def quiz(message: Message, state: FSMContext):
 @dp.message(F.text == 'Вийти')
 async def leave_quiz(message: Message, state: FSMContext):
     await state.clear()
-    # await message.reply(f"Ви отримали {correct} правильних відповідей і {incorrect} неправильних відповідей.\n Це {correct / incorrect}% правильно.")
+    await message.reply(f"Ви отримали {correct} правильних відповідей і {incorrect} неправильних відповідей.\nЦе {correct / (correct + incorrect) * 100}% правильно.")
     await message.answer("Виберіть мод: ", reply_markup=keyboard.user_mode_choice)
 
 
@@ -65,8 +67,8 @@ async def check_translation(message: Message, state: FSMContext):
     else:
         await message.reply(f"Ти помилився, переклад: {random_word[1]}", reply_markup=keyboard.start_quiz)
         incorrect += 1
-    
 
+    
 
 async def start() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
