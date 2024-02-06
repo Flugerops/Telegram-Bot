@@ -32,6 +32,10 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text='Поради')
     ],
 
+    [
+        KeyboardButton(text='Перекладач')
+    ]
+
 ], resize_keyboard=True, input_field_placeholder="Виберіть Мод")
 
 start_quiz = ReplyKeyboardMarkup(keyboard=[

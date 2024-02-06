@@ -45,7 +45,7 @@ async def english(message: types.Message, state: FSMContext):
 async def quiz(message: Message, state: FSMContext):
     mode = (await state.get_data()).get("mod")
     print(mode)
-    random_word = random.choice(list(words.mode.items()))
+    random_word = random.choice(list(words.words.get(mode).items()))
     await message.reply(f"Напишіть переклад слова: {random_word[0]}")    
     await state.update_data(translation=random_word)
     await state.set_state(Quiz.translation)
