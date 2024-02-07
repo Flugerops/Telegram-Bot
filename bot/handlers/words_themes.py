@@ -107,3 +107,8 @@ async def send_dict_school_w(message: types.Message):
     formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.words.get("fasion_words").items()])
     await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN, reply_markup=inline_keyboards.exit_kb)
 
+
+@router.message(F.text.contains('Питання Та Проблеми'))
+async def send_(message: types.Message):
+    await message.reply(text= 'Пиши Нам!', parse_mode=ParseMode.MARKDOWN, reply_markup=inline_keyboards.predlozhka_kb)
+

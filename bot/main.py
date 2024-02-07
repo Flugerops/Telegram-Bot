@@ -70,7 +70,7 @@ async def leave_quiz(message: Message, state: FSMContext):
         await message.reply(f'Ти не відповідав в цьому квізі правильно')
 
     else:
-        await message.reply(f"Ви Отримали {correct} Правильних Відповідей І {incorrect} Неправильних Відповідей.\nЦе {correct / (correct + incorrect) * 100}% Правильно.")
+        await message.reply(f"Ви Отримали {correct} Правильних Відповідей\nІ {incorrect} Неправильних Відповідей.\nЦе {correct / (correct + incorrect) * 100}% Правильно.")
     
     await message.answer("Виберіть мод: ", reply_markup=reply_keyboards.user_mode_choice)
 
@@ -100,12 +100,13 @@ async def check_translation(message: Message, state: FSMContext):
         correct += 1
     
 
+
     else:
         await message.react([ReactionTypeEmoji(emoji="👎")])
         await message.reply(f"Ти помилився, переклад: {random_word[1]}", reply_markup=reply_keyboards.start_quiz)
         incorrect += 1
     await state.update_data(correct=correct, incorrect=incorrect)
-    
+
     
 
 async def start() -> None:

@@ -6,6 +6,13 @@ exit_kb = InlineKeyboardMarkup(inline_keyboard=[
     ]
 ])
 
+predlozhka_kb = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text='Клацай!', url='https://t.me/predlozhkaZNbot', callback_data= 'predlozhka')
+    ]
+])
+
+
 inline_themes = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text="Початкові Слова 💪", callback_data= "start_words")
@@ -58,6 +65,6 @@ inline_themes = InlineKeyboardMarkup(inline_keyboard=[
 
     [
         InlineKeyboardButton(text='Слова На Тему Мода 💄', callback_data= "fasion_words")
-    ]
+    ],
     
 ])

@@ -34,6 +34,10 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
 
     [
         KeyboardButton(text='Перекладач')
+    ],
+
+    [
+        KeyboardButton(text='Питання Та Проблеми')
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Мод")
