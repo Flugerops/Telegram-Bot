@@ -68,3 +68,12 @@ inline_themes = InlineKeyboardMarkup(inline_keyboard=[
     ],
     
 ])
+
+translator_kb = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="🇺🇦 -> 🇬🇧", callback_data="ua_to_en")
+    ],
+        [
+        InlineKeyboardButton(text="🇬🇧 -> 🇺🇦", callback_data="en_to_ua")
+    ]
+])

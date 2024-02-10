@@ -125,8 +125,12 @@ comm_kb = ReplyKeyboardMarkup(keyboard=[
     ]
 ],  resize_keyboard=True, input_field_placeholder="Ваші команди", one_time_keyboard=True)
 
-exit_kb = InlineKeyboardMarkup(inline_keyboard=[
+translator_menu_kb = ReplyKeyboardMarkup(keyboard=[
     [
-        InlineKeyboardButton(text="Назад", callback_data="exit")
+        KeyboardButton(text="❌")
+    ],
+    
+    [
+        KeyboardButton(text="🔄️")
     ]
-])
+],resize_keyboard=True)

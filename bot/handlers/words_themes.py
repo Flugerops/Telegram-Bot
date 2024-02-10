@@ -19,7 +19,6 @@ async def send_dict_start_w(message: types.Message):
 # ОБРОБНИК КНОПКИ ПОДОРОЖ (ЗА ТЕМАМИ)
 @router.message(F.text.contains('Cлова На Тему Подорож'))
 async def send_dict_trip_w(message: types.Message):
-    print("Тута")
     formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.words.get("trip_words").items()])
     await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN, reply_markup=inline_keyboards.exit_kb)
 
@@ -111,4 +110,5 @@ async def send_dict_school_w(message: types.Message):
 @router.message(F.text.contains('Питання Та Проблеми'))
 async def send_(message: types.Message):
     await message.reply(text= 'Пиши Нам!', parse_mode=ParseMode.MARKDOWN, reply_markup=inline_keyboards.predlozhka_kb)
+
 
