@@ -32,17 +32,26 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text='Поради')
     ],
 
+    [
+        KeyboardButton(text='Перекладач')
+    ],
+
+    [
+        KeyboardButton(text='Питання Та Проблеми')
+    ]
+
 ], resize_keyboard=True, input_field_placeholder="Виберіть Мод")
 
 start_quiz = ReplyKeyboardMarkup(keyboard=[
     [
-        KeyboardButton(text="Почати квіз")
+        KeyboardButton(text="Продовжити")
     ],
     [
         KeyboardButton(text="Вийти")
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Натисніть коли готові")
+
 
 themes_kb = ReplyKeyboardMarkup(keyboard=[
     [
@@ -99,9 +108,6 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
 
     [
         KeyboardButton(text='Слова На Тему Мода 💄')
-    ],
-    [
-        KeyboardButton(text="Вийти")
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Тему", one_time_keyboard=True)
@@ -119,9 +125,12 @@ comm_kb = ReplyKeyboardMarkup(keyboard=[
     ]
 ],  resize_keyboard=True, input_field_placeholder="Ваші команди", one_time_keyboard=True)
 
-
-exit_kb = InlineKeyboardMarkup(inline_keyboard=[
+translator_menu_kb = ReplyKeyboardMarkup(keyboard=[
     [
-        InlineKeyboardButton(text="Назад", callback_data="exit")
+        KeyboardButton(text="❌")
+    ],
+    
+    [
+        KeyboardButton(text="🔄️")
     ]
-])
+],resize_keyboard=True)
