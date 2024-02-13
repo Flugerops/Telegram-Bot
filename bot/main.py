@@ -1,6 +1,8 @@
 import asyncio
 import logging
 import sys
+from os import getenv
+from dotenv import load_dotenv
 
 from aiogram.types import ReplyKeyboardRemove, CallbackQuery
 from aiogram.filters.callback_data import CallbackData
@@ -15,11 +17,11 @@ from aiogram.utils.markdown import hbold
 from aiogram.filters import Command
 from aiogram.methods import send_message
 from aiogram.fsm.context import FSMContext
-
-
+from openai import OpenAI
+from bardapi import Bard, BardCookies
 
 from .keyboards import reply_keyboards, inline_keyboards
-from .utils.env import TOKEN
+from .utils.env import TOKEN, BARD_TOKEN
 from .utils.states import Quiz, Translate
 from .misc import words
 from .handlers import words_themes_router, commands_router
@@ -29,8 +31,14 @@ from translators import translate_text
 
 dp = Dispatcher()
 
+cookie_dict = {
+    "__Secure-1PSID": "g.a000gAjNccPFOqVkvqIgX5z7oA7AYMMF2udOr6DxVfYx6fSOSqbGlpQgEbFiJjKzhAL7eJ14xgACgYKAdMSAQASFQHGX2MiYDi7hnhz-IiRYGVA9BqfuBoVAUF8yKrqLxasZSrRKHzscU1UqOX20076",
+    "__Secure-1PSIDTS": "sidts-CjEBYfD7ZyeXEfwvcaEu3kcYYlcLP9YESWHtfVeNidaGhIIR-ErsRPtMn6S_3k396CQ_EAA",
+    "__Secure-1PSIDCC": "ABTWhQEdGa93GyEG_RzRTBFYYDY7YeZuftiFdXrBPwEZACJHZTcHbhWrVRgTbKgPaYICvoMdEg0",
+}
 
-print("❌")
+bard = BardCookies(cookie_dict=cookie_dict)
+print(bard.get_answer("WHAT MODEL ARE YOU USING?")['content'])
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message, state: FSMContext) -> None:

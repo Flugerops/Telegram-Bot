@@ -3,3 +3,4 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = getenv("TOKEN")
+BARD_TOKEN = getenv("BARD_TOKEN")
