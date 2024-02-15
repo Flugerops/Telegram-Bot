@@ -29,7 +29,7 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
     ],
 
     [
-        KeyboardButton(text='Поради')
+        KeyboardButton(text='Асистент')
     ],
 
     [

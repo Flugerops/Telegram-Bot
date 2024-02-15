@@ -36,6 +36,10 @@ async def echo(message: types.Message, state: FSMContext):
     if temp_msg == "перекладач":
         await message.answer("Виберіть режим:", reply_markup = inline_keyboards.translator_kb)
         await state.set_state(states.Translate.message_check)
+
+    if temp_msg == "асистент":
+        await message.answer("Привіт, я асистент команди 'Зміїні Новатори', я допоможу вам з вивченням мов. Задавайте ваше питання:")
+        await state.set_state(states.Assistant.response)
         
 
 
