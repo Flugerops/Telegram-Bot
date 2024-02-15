@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import sys
+import requests
 from os import getenv
 from dotenv import load_dotenv
 
@@ -9,7 +10,7 @@ from aiogram.filters.callback_data import CallbackData
 
 
 import random
-from aiogram import Bot, Dispatcher,F ,Router, types
+from aiogram import Bot, Dispatcher, F, Router, types
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
 from aiogram.types import Message, ReactionTypeEmoji
@@ -21,35 +22,58 @@ from openai import OpenAI
 from bardapi import Bard, BardCookies
 
 from .keyboards import reply_keyboards, inline_keyboards
-from .utils.env import TOKEN, BARD_TOKEN
+from .utils.env import TOKEN, X_RapidAPI_Key
 from .utils.states import Quiz, Translate
 from .misc import words
 from .handlers import words_themes_router, commands_router
 from translators import translate_text
 
 
-
 dp = Dispatcher()
 
-cookie_dict = {
-    "__Secure-1PSID": "g.a000gAjNccPFOqVkvqIgX5z7oA7AYMMF2udOr6DxVfYx6fSOSqbGlpQgEbFiJjKzhAL7eJ14xgACgYKAdMSAQASFQHGX2MiYDi7hnhz-IiRYGVA9BqfuBoVAUF8yKrqLxasZSrRKHzscU1UqOX20076",
-    "__Secure-1PSIDTS": "sidts-CjEBYfD7ZyeXEfwvcaEu3kcYYlcLP9YESWHtfVeNidaGhIIR-ErsRPtMn6S_3k396CQ_EAA",
-    "__Secure-1PSIDCC": "ABTWhQEdGa93GyEG_RzRTBFYYDY7YeZuftiFdXrBPwEZACJHZTcHbhWrVRgTbKgPaYICvoMdEg0",
-}
 
-bard = BardCookies(cookie_dict=cookie_dict)
-print(bard.get_answer("WHAT MODEL ARE YOU USING?")['content'])
+class ChatGPT:
+    def __init__(self) -> None:
+        self.api_key = X_RapidAPI_Key
+        self.url = "https://chat-gpt-3-5-turbo.p.rapidapi.com/ChatComplitition"
+        self.headers = {
+            "content-type": "application/json",
+            "X-RapidAPI-Key": self.api_key,
+            "X-RapidAPI-Host": "chat-gpt-3-5-turbo.p.rapidapi.com"}
+
+    def generate_response(self, message):
+        payload = {"Body": {
+            "messages": [
+                {
+                    "role": "assistant",
+                    "content": "Твоє ім`я бот зміїних новаторів, ти розмовляєш Українською мовою і допомагаєш користувачам"
+                },
+                {
+                    "role": "user",
+                    "content": message
+                }
+            ],
+            "temperature": 0.9,
+            "max_tokens": 100,
+            "stream": False
+        }}
+        response = requests.post(self.url, json=payload, headers=self.headers)
+        return response.json()
+
+chat = ChatGPT()
+print(chat.generate_response(message="Hello"))
+
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message, state: FSMContext) -> None:
     await message.answer(f"Привіт, {hbold(message.from_user.full_name)}!", reply_markup=reply_keyboards.language_kb)
     await message.answer("Я буду допомогати вивчати тобі різні мови", reply_markup=reply_keyboards.language_kb)
     await state.update_data(correct=0, incorrect=0)
-    
-    
+
+
 @dp.message(F.text == 'Англійська🇬🇧')
 async def english(message: types.Message, state: FSMContext):
-    await message.answer("Натисніть на опцію: ", reply_markup = reply_keyboards.user_mode_choice)
+    await message.answer("Натисніть на опцію: ", reply_markup=reply_keyboards.user_mode_choice)
 
 
 @dp.message(F.text == "Продовжити")
@@ -57,10 +81,9 @@ async def quiz(message: Message, state: FSMContext):
     mode = (await state.get_data()).get("mod")
     print(mode)
     random_word = random.choice(list(words.words.get(mode).items()))
-    await message.reply(f"Напишіть переклад слова: {random_word[0]}")    
+    await message.reply(f"Напишіть переклад слова: {random_word[0]}")
     await state.update_data(translation=random_word)
     await state.set_state(Quiz.game)
-    
 
 
 @dp.message(F.text == 'Вийти')
@@ -73,16 +96,16 @@ async def leave_quiz(message: Message, state: FSMContext):
     correct = data.get("correct")
     incorrect = data.get("incorrect")
     await state.clear()
-    
-    if incorrect == 0:  
-        await message.reply(f'Ви Не Помилялись В Цьому Квізі\nІ Отримали {correct} Правильних Відповідей!') 
-    
+
+    if incorrect == 0:
+        await message.reply(f'Ви Не Помилялись В Цьому Квізі\nІ Отримали {correct} Правильних Відповідей!')
+
     elif correct == 0 and incorrect == 0:
         await message.reply(f'Ти не відповідав в цьому квізі правильно')
 
     else:
         await message.reply(f"Ви Отримали {correct} Правильних Відповідей\nІ {incorrect} Неправильних Відповідей.\nЦе {correct / (correct + incorrect) * 100}% Правильно.")
-    
+
     await message.answer("Виберіть мод: ", reply_markup=reply_keyboards.user_mode_choice)
 
 
@@ -90,9 +113,10 @@ async def leave_quiz(message: Message, state: FSMContext):
 async def select_mod_callback(callback_query: types.CallbackQuery, state: FSMContext):
     mode = callback_query.data
     print(mode)
-    await callback_query.message.answer("Натисніть коли готові:",reply_markup=reply_keyboards.start_quiz)
+    await callback_query.message.answer("Натисніть коли готові:", reply_markup=reply_keyboards.start_quiz)
     await state.update_data(mod=mode)
     await state.set_state(Quiz.game)
+
 
 @dp.callback_query(Translate.message_check)
 async def check_message(callback_query: types.CallbackQuery, state: FSMContext):
@@ -100,33 +124,31 @@ async def check_message(callback_query: types.CallbackQuery, state: FSMContext):
     await callback_query.message.reply("Напишіть текст:")
     await state.update_data(mod=mode)
     await state.set_state(Translate.translation)
-    
-    
-@dp.message(Translate.translation)    
+
+
+@dp.message(Translate.translation)
 async def translation(message: Message, state: FSMContext):
     mode = (await state.get_data()).get("mod")
-    
+
     if message.text == "❌":
         await state.clear()
         await message.answer("Виберіть мод: ", reply_markup=reply_keyboards.user_mode_choice)
-    
+
     elif message.text == "🔄️":
         await state.clear()
-        await message.answer("Виберіть режим:", reply_markup = inline_keyboards.translator_kb)
+        await message.answer("Виберіть режим:", reply_markup=inline_keyboards.translator_kb)
         await state.set_state(Translate.message_check)
-    
+
     elif mode == "en_to_ua":
         await message.reply(f"Переклад на українську мову: ")
-        await message.answer(translate_text(message.text,translator="google",from_language="en", to_language='uk'), reply_markup=reply_keyboards.translator_menu_kb)
-    
+        await message.answer(translate_text(message.text, translator="google", from_language="en", to_language='uk'), reply_markup=reply_keyboards.translator_menu_kb)
+
     elif mode == "ua_to_en":
         await message.reply(f'Переклад на англійську мову: ')
         await message.answer(translate_text(message.text, translator="google", from_languag="uk", to_language='en'), reply_markup=reply_keyboards.translator_menu_kb)
-    
-    
+
     await message.answer("Виберіть опцію: ", reply_keyboards.translator_menu_kb)
     await state.clear()
-
 
 
 @dp.message(Quiz.game)
@@ -149,7 +171,6 @@ async def check_translation(message: Message, state: FSMContext):
         await message.reply(f"Ти помилився, переклад: {random_word[1]}", reply_markup=reply_keyboards.start_quiz)
         incorrect += 1
     await state.update_data(correct=correct, incorrect=incorrect)
-
 
 
 async def start() -> None:
