@@ -23,7 +23,6 @@ class ChatGPT:
                 }
             ],
             "temperature": 0.9,
-            "max_tokens": 350,
             "stream": False
         }}
         response = requests.post(self.url, json=payload, headers=self.headers)

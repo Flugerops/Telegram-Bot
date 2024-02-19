@@ -16,6 +16,7 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message, ReactionTypeEmoji
 from aiogram.utils.markdown import hbold
 from aiogram.filters import Command
+from aiogram.utils.chat_action import ChatActionSender
 from aiogram.methods import send_message
 from aiogram.fsm.context import FSMContext
 from openai import OpenAI
@@ -31,7 +32,7 @@ from translators import translate_text
 
 
 dp = Dispatcher()
-
+bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
 
 
 @dp.message(CommandStart())
@@ -144,19 +145,20 @@ async def check_translation(message: Message, state: FSMContext):
 
 @dp.message(Assistant.response)
 async def generate_response(message: Message, state: FSMContext):
-    await message.answer("Зачекайте...")  
-    for i in range(3):
-        await asyncio.sleep(1)
-        await message.edit_text(message.text, f"Зачекайте...{"." * (i + 1)}")
-    response = gpt.generate_response(message.text)
-    await message.answer(response[0].get("message").get("content"), reply_markup=reply_keyboards.user_mode_choice)
+    async with ChatActionSender.typing(bot=bot, chat_id=message.chat.id):
+        await message.answer("Зачекайте...")  
+        response = gpt.generate_response(message.text)
+        print(response)
+    try:
+        await message.answer(response[0].get("message").get("content"), reply_markup=reply_keyboards.user_mode_choice)
+    except:
+        await message.answer("Вибачте, сталася помилка. Повторіть будь-ласка питання")
     await state.set_state(Assistant.response)
     
 
 
 async def start() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
-    bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
     dp.include_routers(words_themes_router, commands_router)
     # And the run events dispatching
     await dp.start_polling(bot)
