@@ -147,9 +147,14 @@ async def check_translation(message: Message, state: FSMContext):
 async def generate_response(message: Message, state: FSMContext):        
     if message.text != "Повернутися в меню":   
         async with ChatActionSender.typing(bot=bot, chat_id=message.chat.id):
-            await message.answer("Зачекайте...")  
-            response = gpt.generate_response(message.text)
-            print(response)
+            animate = await message.answer("Зачекайте")
+            response = asyncio.create_task(gpt.generate_response(message.text))
+            while True:
+                await asyncio.sleep(1)
+                animate = await animate.edit_text(animate.text + ".")         
+                if response.done():
+                    break
+            response = response.result()
         try:
             await message.answer(response[0].get("message").get("content"), reply_markup=reply_keyboards.exit_kb)
         except:
