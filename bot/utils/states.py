@@ -9,3 +9,6 @@ class Quiz(StatesGroup):
 class Translate(StatesGroup):
     message_check = State()
     translation = State()
+    
+class Assistant(StatesGroup):
+    response = State()

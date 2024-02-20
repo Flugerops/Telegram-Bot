@@ -16,52 +16,23 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message, ReactionTypeEmoji
 from aiogram.utils.markdown import hbold
 from aiogram.filters import Command
+from aiogram.utils.chat_action import ChatActionSender
 from aiogram.methods import send_message
 from aiogram.fsm.context import FSMContext
 from openai import OpenAI
 from bardapi import Bard, BardCookies
 
 from .keyboards import reply_keyboards, inline_keyboards
-from .utils.env import TOKEN, X_RapidAPI_Key
-from .utils.states import Quiz, Translate
+from .utils.chatgpt import gpt
+from .utils.env import TOKEN
+from .utils.states import Quiz, Translate, Assistant
 from .misc import words
 from .handlers import words_themes_router, commands_router
 from translators import translate_text
 
 
 dp = Dispatcher()
-
-
-class ChatGPT:
-    def __init__(self) -> None:
-        self.api_key = X_RapidAPI_Key
-        self.url = "https://chat-gpt-3-5-turbo.p.rapidapi.com/ChatComplitition"
-        self.headers = {
-            "content-type": "application/json",
-            "X-RapidAPI-Key": self.api_key,
-            "X-RapidAPI-Host": "chat-gpt-3-5-turbo.p.rapidapi.com"}
-
-    def generate_response(self, message):
-        payload = {"Body": {
-            "messages": [
-                {
-                    "role": "assistant",
-                    "content": "Твоє ім`я бот зміїних новаторів, ти розмовляєш Українською мовою і допомагаєш користувачам"
-                },
-                {
-                    "role": "user",
-                    "content": message
-                }
-            ],
-            "temperature": 0.9,
-            "max_tokens": 100,
-            "stream": False
-        }}
-        response = requests.post(self.url, json=payload, headers=self.headers)
-        return response.json()
-
-chat = ChatGPT()
-print(chat.generate_response(message="Hello"))
+bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
 
 
 @dp.message(CommandStart())
@@ -172,10 +143,30 @@ async def check_translation(message: Message, state: FSMContext):
         incorrect += 1
     await state.update_data(correct=correct, incorrect=incorrect)
 
+@dp.message(Assistant.response)
+async def generate_response(message: Message, state: FSMContext):        
+    if message.text != "Повернутися в меню":   
+        async with ChatActionSender.typing(bot=bot, chat_id=message.chat.id):
+            animate = await message.answer("Зачекайте")
+            response = asyncio.create_task(gpt.generate_response(message.text))
+            while True:
+                await asyncio.sleep(1)
+                animate = await animate.edit_text(animate.text + ".")         
+                if response.done():
+                    break
+            response = response.result()
+        try:
+            await message.answer(response[0].get("message").get("content"), reply_markup=reply_keyboards.exit_kb)
+        except:
+            await message.answer("Вибачте, сталася помилка. Повторіть будь-ласка питання", reply_markup=reply_keyboards.exit_kb)
+        await state.set_state(Assistant.response)
+    else:
+        await message.answer("До побачення!", reply_markup=reply_keyboards.user_mode_choice)
+        await state.clear()
+
 
 async def start() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
-    bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
     dp.include_routers(words_themes_router, commands_router)
     # And the run events dispatching
     await dp.start_polling(bot)
