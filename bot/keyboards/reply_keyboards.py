@@ -1,6 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.filters.callback_data import CallbackData
-
+from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 
 
 kb = ReplyKeyboardMarkup(keyboard=[
@@ -40,7 +40,7 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text='Питання Та Проблеми')
     ]
 
-], resize_keyboard=True, input_field_placeholder="Виберіть Мод")
+], resize_keyboard=True, input_field_placeholder="Виберіть Мод", one_time_keyboard=True)
 
 start_quiz = ReplyKeyboardMarkup(keyboard=[
     [
@@ -134,3 +134,11 @@ translator_menu_kb = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text="🔄️")
     ]
 ],resize_keyboard=True)
+
+exit_kb = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton(text="Повернутися в меню")
+    ]
+],resize_keyboard=True, one_time_keyboard=True)
+
+    

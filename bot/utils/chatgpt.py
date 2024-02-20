@@ -22,10 +22,10 @@ class ChatGPT:
                     "content": message
                 }
             ],
-            "temperature": 0.9,
             "stream": False
         }}
         response = requests.post(self.url, json=payload, headers=self.headers)
         return response.json()
     
 gpt = ChatGPT()
+
