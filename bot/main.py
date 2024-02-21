@@ -20,8 +20,6 @@ from aiogram.utils.chat_action import ChatActionSender
 from aiogram.methods import send_message
 from aiogram.fsm.context import FSMContext
 from openai import OpenAI
-from bardapi import Bard, BardCookies
-
 from .keyboards import reply_keyboards, inline_keyboards
 from .utils.chatgpt import gpt
 from .utils.env import TOKEN
@@ -52,7 +50,7 @@ async def quiz(message: Message, state: FSMContext):
     mode = (await state.get_data()).get("mod")
     print(mode)
     random_word = random.choice(list(words.words.get(mode).items()))
-    await message.reply(f"Напишіть переклад слова: {random_word[0]}")
+    await message.reply(f"Напишіть переклад слова: {random_word[0]}", reply_markup=reply_keyboards.quiz_menu)
     await state.update_data(translation=random_word)
     await state.set_state(Quiz.game)
 
@@ -84,7 +82,7 @@ async def leave_quiz(message: Message, state: FSMContext):
 async def select_mod_callback(callback_query: types.CallbackQuery, state: FSMContext):
     mode = callback_query.data
     print(mode)
-    await callback_query.message.answer("Натисніть коли готові:", reply_markup=reply_keyboards.start_quiz)
+    await callback_query.message.answer("Натисніть коли готові:", reply_markup=reply_keyboards.quiz_start)
     await state.update_data(mod=mode)
     await state.set_state(Quiz.game)
 
@@ -135,11 +133,14 @@ async def check_translation(message: Message, state: FSMContext):
     print(random_word)
     if message.text.lower() in map(str.lower, random_word[1]):
         await message.react([ReactionTypeEmoji(emoji="👍")])
-        await message.reply("Ти відповів правильно.", reply_markup=reply_keyboards.start_quiz)
+        await message.reply("Ти відповів правильно.", reply_markup=reply_keyboards.quiz_start)
         correct += 1
+    elif F.text == "Я не можу відповісти":
+        await message.reply(f"Переклад цього слова: {random_word[1]}", reply_markup=reply_keyboards.quiz_start)
+        incorrect += 1
     else:
         await message.react([ReactionTypeEmoji(emoji="👎")])
-        await message.reply(f"Ти помилився, переклад: {random_word[1]}", reply_markup=reply_keyboards.start_quiz)
+        await message.reply(f"Ти помилився, переклад: {random_word[1]}", reply_markup=reply_keyboards.quiz_start)
         incorrect += 1
     await state.update_data(correct=correct, incorrect=incorrect)
 
