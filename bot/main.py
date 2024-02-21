@@ -145,7 +145,10 @@ async def check_translation(message: Message, state: FSMContext):
 
 @dp.message(Assistant.response)
 async def generate_response(message: Message, state: FSMContext):        
-    if message.text != "Повернутися в меню":   
+    if message.text == "Повернутися в меню":   
+        await message.answer("До побачення!", reply_markup=reply_keyboards.user_mode_choice)
+        await state.clear()
+    else:
         async with ChatActionSender.typing(bot=bot, chat_id=message.chat.id):
             animate = await message.answer("Зачекайте")
             response = asyncio.create_task(gpt.generate_response(message.text))
@@ -160,10 +163,7 @@ async def generate_response(message: Message, state: FSMContext):
         except:
             await message.answer("Вибачте, сталася помилка. Повторіть будь-ласка питання", reply_markup=reply_keyboards.exit_kb)
         await state.set_state(Assistant.response)
-    else:
-        await message.answer("До побачення!", reply_markup=reply_keyboards.user_mode_choice)
-        await state.clear()
-
+        
 
 async def start() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
