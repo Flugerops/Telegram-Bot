@@ -24,7 +24,7 @@ class ChatGPT:
                 }
             ],
             "temperature": 0.9,
-		    "max_tokens": 100,
+		    "max_tokens": 500,
             "stream": False
         }}
         async with aiohttp.ClientSession() as session:
