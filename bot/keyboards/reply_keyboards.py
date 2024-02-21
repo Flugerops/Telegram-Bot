@@ -42,9 +42,12 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Мод", one_time_keyboard=True)
 
-start_quiz = ReplyKeyboardMarkup(keyboard=[
+quiz_menu = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="Продовжити")
+    ],
+    [
+        KeyboardButton(text="Я не можу відповісти")
     ],
     [
         KeyboardButton(text="Вийти")
@@ -135,10 +138,20 @@ translator_menu_kb = ReplyKeyboardMarkup(keyboard=[
     ]
 ],resize_keyboard=True)
 
+
+
 exit_kb = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="Повернутися в меню")
     ]
 ],resize_keyboard=True, one_time_keyboard=True)
 
-    
+quiz_start = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton(text="Продовжити")
+    ],
+    [
+        KeyboardButton(text="Вийти")
+    ]
+
+], resize_keyboard=True, one_time_keyboard=True)
