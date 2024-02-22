@@ -28,7 +28,6 @@ from .misc import words
 from .handlers import words_themes_router, commands_router
 from translators import translate_text
 
-
 dp = Dispatcher()
 bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
 
@@ -135,9 +134,11 @@ async def check_translation(message: Message, state: FSMContext):
         await message.react([ReactionTypeEmoji(emoji="👍")])
         await message.reply("Ти відповів правильно.", reply_markup=reply_keyboards.quiz_start)
         correct += 1
+    
     elif F.text == "Я не можу відповісти":
         await message.reply(f"Переклад цього слова: {random_word[1]}", reply_markup=reply_keyboards.quiz_start)
         incorrect += 1
+    
     else:
         await message.react([ReactionTypeEmoji(emoji="👎")])
         await message.reply(f"Ти помилився, переклад: {random_word[1]}", reply_markup=reply_keyboards.quiz_start)
@@ -149,22 +150,25 @@ async def generate_response(message: Message, state: FSMContext):
     if message.text == "Повернутися в меню":   
         await message.answer("До побачення!", reply_markup=reply_keyboards.user_mode_choice)
         await state.clear()
+    
     else:
         async with ChatActionSender.typing(bot=bot, chat_id=message.chat.id):
             animate = await message.answer("Зачекайте")
             response = asyncio.create_task(gpt.generate_response(message.text))
             while True:
-                await asyncio.sleep(1)
+                await asyncio.sleep(1.5)
                 animate = await animate.edit_text(animate.text + ".")         
                 if response.done():
+                    print(response)
                     break
             response = response.result()
+            print(response)
         try:
-            await message.answer(response[0].get("message").get("content"), reply_markup=reply_keyboards.exit_kb)
+            await message.answer(response.get("response"), reply_markup=reply_keyboards.exit_kb)
         except:
             await message.answer("Вибачте, сталася помилка. Повторіть будь-ласка питання", reply_markup=reply_keyboards.exit_kb)
         await state.set_state(Assistant.response)
-        
+
 
 async def start() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
