@@ -22,7 +22,7 @@ from aiogram.fsm.context import FSMContext
 from .keyboards import reply_keyboards, inline_keyboards
 from .utils.chatgpt import gpt
 from .utils.env import TOKEN
-from .utils.states import Quiz, Translate, Assistant
+from .utils.states import Quiz, Translate, Assistant, Language
 from .misc import words
 from .handlers import words_themes_router, commands_router
 from translators import translate_text
@@ -39,19 +39,20 @@ async def command_start_handler(message: Message, state: FSMContext) -> None:
     await message.answer(f"Привіт, {hbold(message.from_user.full_name)}!", reply_markup=reply_keyboards.language_kb)
     await message.answer("Я буду допомогати вивчати тобі різні мови", reply_markup=reply_keyboards.language_kb)
     await state.update_data(correct=0, incorrect=0)
+    await state.set_state(Language.language_select)
 
 
-@dp.message(F.text == "Французька🇫🇷" or F.text == "Англійська🇬🇧")
+@dp.message(Language.language_select)
 async def menu(message: types.Message, state: FSMContext):
     global language
     print(message.text)
     match message.text:
         case "Англійська🇬🇧":
             language = "eng"
-        
         case "Французька🇫🇷":
             language = "french"
     await message.answer("Натисніть на опцію: ", reply_markup=reply_keyboards.user_mode_choice)
+    await state.clear()
 
 
 # @dp.message(F.text == "Французька🇫🇷" or F.text == "Англійська🇬🇧")
