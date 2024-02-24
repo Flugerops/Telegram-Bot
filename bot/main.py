@@ -124,7 +124,7 @@ async def translation(message: Message, state: FSMContext):
 
     if message.text == "❌":
         await state.clear()
-        await message.answer("Виберіть мод: ", reply_markup=reply_keyboards.user_mode_choice)
+        await message.answer("Виберіть мод : ", reply_markup=reply_keyboards.user_mode_choice)
 
     elif message.text == "🔄️":
         await state.clear()
