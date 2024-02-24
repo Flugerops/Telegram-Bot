@@ -6,7 +6,6 @@ language_kb = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="Англійська🇬🇧")
     ],
-
     [
         KeyboardButton(text="Французька🇫🇷")
     ]
