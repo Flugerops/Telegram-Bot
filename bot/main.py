@@ -19,7 +19,6 @@ from aiogram.filters import Command
 from aiogram.utils.chat_action import ChatActionSender
 from aiogram.methods import send_message
 from aiogram.fsm.context import FSMContext
-from openai import OpenAI
 from .keyboards import reply_keyboards, inline_keyboards
 from .utils.chatgpt import gpt
 from .utils.env import TOKEN
@@ -31,6 +30,9 @@ from translators import translate_text
 dp = Dispatcher()
 bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
 
+language = None
+
+
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message, state: FSMContext) -> None:
@@ -39,10 +41,31 @@ async def command_start_handler(message: Message, state: FSMContext) -> None:
     await state.update_data(correct=0, incorrect=0)
 
 
-@dp.message(F.text == 'Англійська🇬🇧')
-async def english(message: types.Message, state: FSMContext):
+@dp.message(F.text == "Французька🇫🇷" or F.text == "Англійська🇬🇧")
+async def menu(message: types.Message, state: FSMContext):
+    global language
+    print(message.text)
+    match message.text:
+        case "Англійська🇬🇧":
+            language = "eng"
+        
+        case "Французька🇫🇷":
+            language = "french"
     await message.answer("Натисніть на опцію: ", reply_markup=reply_keyboards.user_mode_choice)
 
+
+# @dp.message(F.text == "Французька🇫🇷" or F.text == "Англійська🇬🇧")
+# async def language_select(message: Message):
+#     global language
+#     print(message.text)
+#     match message.text:
+#         case "Англійська🇬🇧":
+#             language = "eng"
+        
+#         case "Французька🇫🇷":
+#             language = "french"
+    
+# print(language)
 
 @dp.message(F.text == "Продовжити")
 async def quiz(message: Message, state: FSMContext):
@@ -74,11 +97,12 @@ async def leave_quiz(message: Message, state: FSMContext):
     else:
         await message.reply(f"Ви Отримали {correct} Правильних Відповідей\nІ {incorrect} Неправильних Відповідей.\nЦе {correct / (correct + incorrect) * 100}% Правильно.")
 
-    await message.answer("Виберіть мод: ", reply_markup=reply_keyboards.user_mode_choice)
+    await message.answer("Виберіть Режим: ", reply_markup=reply_keyboards.user_mode_choice)
 
 
 @dp.callback_query(Quiz.check_mod)
 async def select_mod_callback(callback_query: types.CallbackQuery, state: FSMContext):
+    print(language)
     mode = callback_query.data
     print(mode)
     await callback_query.message.answer("Натисніть коли готові:", reply_markup=reply_keyboards.quiz_start)
