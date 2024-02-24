@@ -1,19 +1,14 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
-
-
-
-kb = ReplyKeyboardMarkup(keyboard=[
-    [
-        KeyboardButton(text="Команди")
-    ],
-    [
-        KeyboardButton(text="Наша Команда")
-    ]
-], resize_keyboard=True, input_field_placeholder="Виберіть Опцію")
+from aiogram.filters.callback_data import CallbackData
+from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 
 language_kb = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="Англійська🇬🇧")
+    ],
+
+    [
+        KeyboardButton(text="Французька🇫🇷")
     ]
 ], resize_keyboard=True, input_field_placeholder="Виберіть Мову")
 
@@ -28,20 +23,32 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
     ],
 
     [
-        KeyboardButton(text='Поради')
+        KeyboardButton(text='Асистент')
     ],
 
-], resize_keyboard=True, input_field_placeholder="Виберіть Мод")
-
-start_quiz = ReplyKeyboardMarkup(keyboard=[
     [
-        KeyboardButton(text="Почати квіз")
+        KeyboardButton(text='Перекладач')
+    ],
+
+    [
+        KeyboardButton(text='Контакти Розробників')
+    ]
+
+], resize_keyboard=True, input_field_placeholder="Виберіть Режим", one_time_keyboard=True)
+
+quiz_menu = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton(text="Продовжити")
+    ],
+    [
+        KeyboardButton(text="Я не можу відповісти")
     ],
     [
         KeyboardButton(text="Вийти")
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Натисніть коли готові")
+
 
 themes_kb = ReplyKeyboardMarkup(keyboard=[
     [
@@ -98,9 +105,6 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
 
     [
         KeyboardButton(text='Слова На Тему Мода 💄')
-    ],
-    [
-        KeyboardButton(text="Вийти")
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Тему", one_time_keyboard=True)
@@ -118,9 +122,34 @@ comm_kb = ReplyKeyboardMarkup(keyboard=[
     ]
 ],  resize_keyboard=True, input_field_placeholder="Ваші команди", one_time_keyboard=True)
 
-
-team_kb = InlineKeyboardMarkup(inline_keyboard=[
+translator_menu_kb = ReplyKeyboardMarkup(keyboard=[
     [
-        InlineKeyboardButton(text="Посилання на наш проєкт", url="https://github.com/Flugerops/Telegram-Bot")
+        KeyboardButton(text="❌")
+    ],
+    
+    [
+        KeyboardButton(text="🔄️")
     ]
-])
+],resize_keyboard=True)
+
+
+
+exit_kb = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton(text="Повернутися в меню")
+    ]
+],resize_keyboard=True, one_time_keyboard=True)
+
+quiz_start = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton(text="Продовжити")
+    ],
+    [
+        KeyboardButton(text="Вийти")
+    ]
+
+
+
+
+
+], resize_keyboard=True, one_time_keyboard=True)
