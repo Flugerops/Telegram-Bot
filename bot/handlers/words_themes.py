@@ -66,17 +66,17 @@ async def send_dict_it_w(message: types.Message):
 
 # ОБРОБНИК КОМАНДИ СПОРТ (ЗА ТЕМАМИ)
 @router.message(F.text.contains('Слова На Тему Спорт'))
-async def send_dict_sport_w(message: types.Message):
-    from ..main import language
-    formatted_dict = "\n".join([f'{words} - {translation}' for word, translation in words.words.get("eng").get("sport_words").items()])
-    await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN, reply_markup=inline_keyboards.exit_kb)
+async def send_dict_sports_w(message: types.Message):
+    from ..main import language 
+    formatted_d = "\n".join([f'{word} - {translation}' for word, translation in words.words.get(language).get("sport_words").items()])
+    await message.reply(formatted_d, ParseMode=ParseMode.MARKDOWN, reply_markup=inline_keyboards.exit_kb)
 
 
 # ОБРОБНИК КНОПКИ ШКОЛА (ЗА ТЕМАМИ)
 @router.message(F.text.contains('Слова На Тему Школа'))
 async def send_dict_school_w(message: types.Message):
     from ..main import language
-    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.words.get("eng").get("school_words").items()])
+    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.words.get(language).get("school_words").items()])
     await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN, reply_markup=inline_keyboards.exit_kb)
 
 
@@ -101,7 +101,7 @@ async def send_dict_school_w(message: types.Message):
 @router.message(F.text.contains('Слова На Тему Робота'))
 async def send_dict_school_w(message: types.Message):
     from ..main import language
-    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.words.get("eng").get("job_words").items()])
+    formatted_dict = "\n".join([f"{word} - {translation}" for word, translation in words.words.get(language).get("job_words").items()])
     await message.reply(formatted_dict, parse_mode=ParseMode.MARKDOWN, reply_markup=inline_keyboards.exit_kb)
 
 

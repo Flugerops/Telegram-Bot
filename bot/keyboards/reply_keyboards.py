@@ -31,7 +31,11 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
 
     [
         KeyboardButton(text='Контакти Розробників')
-    ]
+    ],
+
+    # [
+    #     KeyboardButton(text='Вибір Мови')
+    # ]
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Режим", one_time_keyboard=True)
 

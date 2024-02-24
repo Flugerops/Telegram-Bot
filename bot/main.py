@@ -45,7 +45,6 @@ async def command_start_handler(message: Message, state: FSMContext) -> None:
 @dp.message(Language.language_select)
 async def menu(message: types.Message, state: FSMContext):
     global language
-    print(message.text)
     match message.text:
         case "Англійська🇬🇧":
             language = "eng"
@@ -68,11 +67,12 @@ async def menu(message: types.Message, state: FSMContext):
     
 # print(language)
 
+
 @dp.message(F.text == "Продовжити")
 async def quiz(message: Message, state: FSMContext):
     mode = (await state.get_data()).get("mod")
     print(mode)
-    random_word = random.choice(list(words.words.get(mode).items()))
+    random_word=random.choice(list(words.words.get(language).get(mode).items()))
     await message.reply(f"Напишіть переклад слова: {random_word[0]}", reply_markup=reply_keyboards.quiz_menu)
     await state.update_data(translation=random_word)
     await state.set_state(Quiz.game)
@@ -88,17 +88,13 @@ async def leave_quiz(message: Message, state: FSMContext):
     correct = data.get("correct")
     incorrect = data.get("incorrect")
     await state.clear()
-
     if incorrect == 0:
         await message.reply(f'Ви Не Помилялись В Цьому Квізі\nІ Отримали {correct} Правильних Відповідей!')
-
     elif correct == 0 and incorrect == 0:
         await message.reply(f'Ти не відповідав в цьому квізі правильно')
-
     else:
-        await message.reply(f"Ви Отримали {correct} Правильних Відповідей\nІ {incorrect} Неправильних Відповідей.\nЦе {correct / (correct + incorrect) * 100}% Правильно.")
-
-    await message.answer("Виберіть Режим: ", reply_markup=reply_keyboards.user_mode_choice)
+        await message.reply(f"Ви Отримали {correct} Правильних Відповідей\nІ {incorrect} Неправильних Відповідей.\nЦе {int(correct / (correct + incorrect) * 100)}% Правильно.")
+    await message.answer("Виберіть мод: ", reply_markup=reply_keyboards.user_mode_choice)
 
 
 @dp.callback_query(Quiz.check_mod)

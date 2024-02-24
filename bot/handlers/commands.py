@@ -39,6 +39,9 @@ async def echo(message: types.Message, state: FSMContext):
     if temp_msg == "асистент":
         await message.answer("Привіт, я асистент команди 'Зміїні Новатори', я допоможу вам з вивченням мов. Задавайте ваше питання:")
         await state.set_state(states.Assistant.response)
+
+    # if temp_msg == 'Вибір Мови':
+    #     await message.reply('Це круто що тобу цікаві інші мови!', reply_markup= reply_keyboards.language_kb)
         
 
 @router.callback_query()
