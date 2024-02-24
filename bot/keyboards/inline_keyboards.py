@@ -6,9 +6,20 @@ exit_kb = InlineKeyboardMarkup(inline_keyboard=[
     ]
 ])
 
-predlozhka_kb = InlineKeyboardMarkup(inline_keyboard=[
+
+
+team_kb = InlineKeyboardMarkup(inline_keyboard=[
     [
-        InlineKeyboardButton(text='Клацай!', url='https://t.me/predlozhkaZNbot', callback_data= 'predlozhka')
+        InlineKeyboardButton(text = "Леонід - Team Lead", url = "https://t.me//big_pencil19", callback_data= "leonid_usr")
+    ],
+    
+    [
+        InlineKeyboardButton(text = "Назар - Fronend", url = "https://t.me//Dethstalker007", callback_data= "nazar_usr")
+    ],
+    
+    
+    [
+        InlineKeyboardButton(text= "Богдан - Backend", url= "https://t.me//ghftrk", callback_data= "bohdan_usr")
     ]
 ])
 
