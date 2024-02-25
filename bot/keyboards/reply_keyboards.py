@@ -28,10 +28,14 @@ user_mode_choice = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text='Перекладач')
     ],
-
+    
+    [
+        KeyboardButton(text='Вибір Мови')
+    ],
+    
     [
         KeyboardButton(text='Контакти Розробників')
-    ]
+    ],
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Режим", one_time_keyboard=True)
 
