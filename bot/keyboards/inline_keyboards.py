@@ -102,3 +102,13 @@ fr_translator_kb = InlineKeyboardMarkup(inline_keyboard=[
         InlineKeyboardButton(text="🇺🇦 -> 🇫🇷", callback_data="ua_to_fr")
     ]
 ])
+
+gr_translator_kb = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="🇩🇪 -> 🇺🇦", callback_data="gr_to_ua")
+    ],
+
+    [
+        InlineKeyboardButton(text="🇺🇦 -> 🇩🇪", callback_data="ua_to_gr")
+    ]
+])

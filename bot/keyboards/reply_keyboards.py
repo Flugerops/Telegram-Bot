@@ -8,8 +8,11 @@ language_kb = ReplyKeyboardMarkup(keyboard=[
     ],
     [
         KeyboardButton(text="Французька🇫🇷")
+    ],
+    [
+        KeyboardButton(text="Німецька🇩🇪")
     ]
-], resize_keyboard=True, input_field_placeholder="Виберіть Мову")
+], resize_keyboard= True, input_field_placeholder="Оберіть мову", one_time_keyboard=True)
 
 
 user_mode_choice = ReplyKeyboardMarkup(keyboard=[

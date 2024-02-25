@@ -55,6 +55,10 @@ async def menu(message: Message, state: FSMContext):
             language = "eng"
         case "Французька🇫🇷":
             language = "french"
+
+        case "Німецька🇩🇪":
+            language = "ger"
+
     await message.answer("Натисніть на опцію: ", reply_markup=reply_keyboards.user_mode_choice)
     await state.clear()
 
@@ -134,29 +138,47 @@ async def translation(message: Message, state: FSMContext):
     elif message.text == "🔄️":
         await state.clear()
         if language == "eng":
-            await message.answer("Виберіть режим:", reply_markup=inline_keyboards.eng_translator_kbtranslator_kb)
+            await message.answer("Виберіть режим:", reply_markup=inline_keyboards.eng_translator_kb)
+        
         elif language == "french":
             await message.answer("Виберіть режим:", reply_markup=inline_keyboards.fr_translator_kb)
-        await state.set_state(Translate.message_check)
+            await state.set_state(Translate.message_check)
+
+        elif language == "ger":
+            await message.answer('Виберіть режим: ', reply_markup=inline_keyboards.gr_translator_kb)
+            await state.set_state(Translate.message_check)
+
 
 
     elif mode == "en_to_ua":
-        await message.reply(f"Переклад на українську мову: ")
+        await message.reply("Переклад з фнглійської на українську мову: ")
         await message.answer(translate_text(message.text, translator="google", from_language="en", to_language='uk'), reply_markup=reply_keyboards.translator_menu_kb)
 
+
     elif mode == "ua_to_en":
-        await message.reply(f'Переклад на англійську мову: ')
+        await message.reply('Переклад з української на англійську мову: ')
         await message.answer(translate_text(message.text, translator="google", from_languag="uk", to_language='en'), reply_markup=reply_keyboards.translator_menu_kb)
 
+
     elif mode == "fr_to_ua":
-        await message.reply(f"Переклад на українську мову: ")
+        await message.reply("Переклад з французької на українську мову: ")
         await message.answer(translate_text(message.text, translator="google", from_languag="fr", to_language='uk'), reply_markup=reply_keyboards.translator_menu_kb)
 
+
     elif mode == "ua_to_fr":
-        await message.reply(f'Переклад на французську мову: ')
+        await message.reply('Переклад з української на французську мову: ')
         await message.answer(translate_text(message.text, translator="google", from_languag="uk", to_language='fr'), reply_markup=reply_keyboards.translator_menu_kb)
 
-        
+
+    elif mode == "gr_to_ua":
+        await message.reply('Переклад з німецької на українську: ')
+        await message.reply(translate_text(message.text, translator="google", from_languag="de", to_language='uk'), reply_markup=reply_keyboards.translator_menu_kb)
+    
+
+    elif mode == "ua_to_gr":
+        await message.reply('Переклад з української на німецьку: ')
+        await message.reply(translate_text(message.text, translator="google", from_languag="uk", to_language='de'), reply_markup=reply_keyboards.translator_menu_kb)
+
         
     await message.answer("Виберіть опцію: ", reply_keyboards.translator_menu_kb)
     await state.clear()

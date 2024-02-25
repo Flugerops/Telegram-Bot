@@ -37,9 +37,11 @@ async def echo(message: types.Message, state: FSMContext):
         if language == "eng":
             await message.answer("Виберіть режим:", reply_markup= inline_keyboards.eng_translator_kb)
         
-        elif language == "french":
-            await message.answer("Виберіть режим:", reply_markup= inline_keyboards.fr_translator_kb)
-
+        if language == "french":
+                await message.answer("Виберіть режим:", reply_markup= inline_keyboards.fr_translator_kb)
+        
+        if language == "ger":
+            await message.answer("Виберіть режим:", reply_markup= inline_keyboards.gr_translator_kb)
         await state.set_state(states.Translate.message_check)
 
     if temp_msg == "асистент":
