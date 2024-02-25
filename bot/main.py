@@ -36,14 +36,19 @@ language = None
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message, state: FSMContext) -> None:
-    await message.answer(f"Привіт, {hbold(message.from_user.full_name)}!", reply_markup=reply_keyboards.language_kb)
+    await message.answer(f"Привіт, {hbold(message.from_user.full_name)}!")
     await message.answer("Я буду допомогати вивчати тобі різні мови", reply_markup=reply_keyboards.language_kb)
     await state.update_data(correct=0, incorrect=0)
     await state.set_state(Language.language_select)
 
 
+# @dp.message(F.text == "Вибір Мови")
+# async def language_select(message: Message, state: FSMContext):
+#     await state.set_state(Language.language_select)
+
+
 @dp.message(Language.language_select)
-async def menu(message: types.Message, state: FSMContext):
+async def menu(message: Message, state: FSMContext):
     global language
     match message.text:
         case "Англійська🇬🇧":
@@ -52,6 +57,7 @@ async def menu(message: types.Message, state: FSMContext):
             language = "french"
     await message.answer("Натисніть на опцію: ", reply_markup=reply_keyboards.user_mode_choice)
     await state.clear()
+
 
 
 # @dp.message(F.text == "Французька🇫🇷" or F.text == "Англійська🇬🇧")
@@ -78,6 +84,7 @@ async def quiz(message: Message, state: FSMContext):
     await state.set_state(Quiz.game)
 
 
+
 @dp.message(F.text == 'Вийти')
 async def leave_quiz(message: Message, state: FSMContext):
     data = await state.get_data()
@@ -99,6 +106,7 @@ async def leave_quiz(message: Message, state: FSMContext):
 
 @dp.callback_query(Quiz.check_mod)
 async def select_mod_callback(callback_query: types.CallbackQuery, state: FSMContext):
+    
     print(language)
     mode = callback_query.data
     print(mode)
@@ -125,8 +133,12 @@ async def translation(message: Message, state: FSMContext):
 
     elif message.text == "🔄️":
         await state.clear()
-        await message.answer("Виберіть режим:", reply_markup=inline_keyboards.translator_kb)
+        if language == "eng":
+            await message.answer("Виберіть режим:", reply_markup=inline_keyboards.eng_translator_kbtranslator_kb)
+        elif language == "french":
+            await message.answer("Виберіть режим:", reply_markup=inline_keyboards.fr_translator_kb)
         await state.set_state(Translate.message_check)
+
 
     elif mode == "en_to_ua":
         await message.reply(f"Переклад на українську мову: ")
@@ -136,6 +148,16 @@ async def translation(message: Message, state: FSMContext):
         await message.reply(f'Переклад на англійську мову: ')
         await message.answer(translate_text(message.text, translator="google", from_languag="uk", to_language='en'), reply_markup=reply_keyboards.translator_menu_kb)
 
+    elif mode == "fr_to_ua":
+        await message.reply(f"Переклад на українську мову: ")
+        await message.answer(translate_text(message.text, translator="google", from_languag="fr", to_language='uk'), reply_markup=reply_keyboards.translator_menu_kb)
+
+    elif mode == "ua_to_fr":
+        await message.reply(f'Переклад на французську мову: ')
+        await message.answer(translate_text(message.text, translator="google", from_languag="uk", to_language='fr'), reply_markup=reply_keyboards.translator_menu_kb)
+
+        
+        
     await message.answer("Виберіть опцію: ", reply_keyboards.translator_menu_kb)
     await state.clear()
 
