@@ -12,3 +12,6 @@ class Translate(StatesGroup):
     
 class Assistant(StatesGroup):
     response = State()
+
+class Language(StatesGroup):
+    language_select = State()

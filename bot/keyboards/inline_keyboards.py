@@ -1,5 +1,8 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 
+
+
+
 exit_kb = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text="Назад", callback_data="exit")
@@ -55,7 +58,7 @@ inline_themes = InlineKeyboardMarkup(inline_keyboard=[
     ],
     
     [
-        InlineKeyboardButton(text='Слова На Тему Спорт ⚽️', callback_data= "sprt_words")
+        InlineKeyboardButton(text='Слова На Тему Спорт ⚽️', callback_data= "sport_words")
     ],
 
     [
@@ -80,11 +83,22 @@ inline_themes = InlineKeyboardMarkup(inline_keyboard=[
     
 ])
 
-translator_kb = InlineKeyboardMarkup(inline_keyboard=[
+eng_translator_kb = InlineKeyboardMarkup(inline_keyboard=[
     [
         InlineKeyboardButton(text="🇺🇦 -> 🇬🇧", callback_data="ua_to_en")
     ],
-        [
+
+    [
         InlineKeyboardButton(text="🇬🇧 -> 🇺🇦", callback_data="en_to_ua")
+    ]
+])
+
+fr_translator_kb = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="🇫🇷 -> 🇺🇦", callback_data="fr_to_ua")
+    ],
+
+    [
+        InlineKeyboardButton(text="🇺🇦 -> 🇫🇷", callback_data="ua_to_fr")
     ]
 ])
