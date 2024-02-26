@@ -11,6 +11,9 @@ language_kb = ReplyKeyboardMarkup(keyboard=[
     ],
     [
         KeyboardButton(text="Німецька🇩🇪")
+    ],
+    [
+        KeyboardButton(text="Іспанська🇪🇸")
     ]
 ], resize_keyboard= True, input_field_placeholder="Оберіть мову", one_time_keyboard=True)
 
@@ -111,6 +114,10 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
 
     [
         KeyboardButton(text='Слова На Тему Мода 💄')
+    ],
+
+    [
+        KeyboardButton(text='Слова На Тему Питання ❓')
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Тему", one_time_keyboard=True)
