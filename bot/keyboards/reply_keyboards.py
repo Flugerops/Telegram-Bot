@@ -14,6 +14,9 @@ language_kb = ReplyKeyboardMarkup(keyboard=[
     ],
     [
         KeyboardButton(text="Іспанська🇪🇸")
+    ],
+    [
+        KeyboardButton(text="Італійська🇮🇹")
     ]
 ], resize_keyboard= True, input_field_placeholder="Оберіть мову", one_time_keyboard=True)
 

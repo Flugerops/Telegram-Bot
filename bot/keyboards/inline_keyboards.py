@@ -126,3 +126,12 @@ sp_translator_kb = InlineKeyboardMarkup(inline_keyboard=[
         InlineKeyboardButton(text='🇺🇦 -> 🇪🇸', callback_data="ua_to_sp")
     ]
 ])
+
+it_translator_kb = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="🇮🇹 -> 🇺🇦", callback_data="it_to_ua")
+    ],
+    [
+        InlineKeyboardButton(text="🇺🇦 -> 🇮🇹", callback_data="ua_to_it")
+    ]
+])

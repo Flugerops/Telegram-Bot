@@ -62,6 +62,9 @@ async def menu(message: Message, state: FSMContext):
         case "Іспанська🇪🇸":
             language = "spain"
 
+        case "Італійська🇮🇹":
+            language = "italy"
+
     await message.answer("Натисніть на опцію: ", reply_markup=reply_keyboards.user_mode_choice)
     await state.clear()
 
@@ -155,6 +158,10 @@ async def translation(message: Message, state: FSMContext):
             await message.answer('Виберіть режим: ', reply_markup=inline_keyboards.sp_translator_kb)
             await state.set_state(Translate.message_check)
 
+        elif language == "italy":
+            await message.answer('Виберіть режим: ', reply_markup= inline_keyboards.it_translator_kb)
+            await state.set_state(Translate.message_check)
+
 
 
     elif mode == "en_to_ua":
@@ -194,6 +201,17 @@ async def translation(message: Message, state: FSMContext):
     elif mode == "ua_to_sp":
         await message.reply('Переклад з української на іспанську: ')
         await message.reply(translate_text(message.txt, translator="google", from_language="uk", to_language="es"), reply_markup=reply_keyboards.translator_menu_kb)
+
+
+    elif mode == "it_to_ua":
+        await message.reply('Переклад з італійської на українську: ')
+        await message.reply(translate_text(message.text, translator = "google", from_language="it", to_language="uk"), reply_markup=reply_keyboards.translator_menu_kb)
+
+
+    elif mode == 'ua_to_it':
+        await message.reply('Переклад з української на італійську: ')
+        await message.reply(translate_text(message.text, translator="google", from_language="uk", to_language="it"), reply_markup=reply_keyboards.translator_menu_kb)
+
 
     await message.answer("Виберіть опцію: ", reply_keyboards.translator_menu_kb)
     await state.clear()
