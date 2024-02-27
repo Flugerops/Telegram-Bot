@@ -104,7 +104,7 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
     ],
 
     [
-        KeyboardButton(text= 'Cлова На Тему Квартира 🏘')
+        KeyboardButton(text='Слова На Тему Квартира 🏘')
     ],
 
     [

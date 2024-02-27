@@ -26,10 +26,10 @@ async def echo(message: types.Message, state: FSMContext):
     
     if temp_msg == "слова по темам":
         await message.answer("Виберіть тему:",reply_markup= reply_keyboards.themes_kb)
+        await state.set_state(states.Words_themes.theme_select)
     
     if temp_msg == "вгадай переклад слова":
         await message.answer("Виберіть режим:",reply_markup= inline_keyboards.inline_themes)
-        await state.set_state(states.Quiz.check_mod)
     
     
     if temp_msg == "перекладач":
@@ -54,6 +54,10 @@ async def echo(message: types.Message, state: FSMContext):
             await message.answer('Виберіть режим: ', reply_markup=inline_keyboards.it_translator_kb)
             await state.set_state(states.Translate.message_check)
 
+        if language == "spain":
+            await message.answer('Виберіть режим: ', reply_markup=inline_keyboards.sp_translator_kb)
+            await state.set_state(states.Translate.message_check)
+
 
     if temp_msg == "асистент":
         await message.answer("Привіт, я асистент команди 'Зміїні Новатори', я допоможу вам з вивченням мов. Задавайте ваше питання:")
@@ -70,4 +74,4 @@ async def echo(message: types.Message, state: FSMContext):
 async def callback_query_keyboard(callback_query: types.CallbackQuery):
     if callback_query.data == "exit":
         await callback_query.message.answer("Виберіть мод:", reply_markup=reply_keyboards.user_mode_choice)
-
+        
