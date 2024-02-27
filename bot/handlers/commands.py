@@ -30,7 +30,7 @@ async def echo(message: types.Message, state: FSMContext):
     
     if temp_msg == "вгадай переклад слова":
         await message.answer("Виберіть режим:",reply_markup= inline_keyboards.inline_themes)
-    
+        await state.set_state(states.Quiz.check_mod)
     
     if temp_msg == "перекладач":
         from ..main import language
