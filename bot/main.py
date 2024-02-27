@@ -23,9 +23,11 @@ from .keyboards import reply_keyboards, inline_keyboards
 from .utils.chatgpt import gpt
 from .utils.env import TOKEN
 from .utils.states import Quiz, Translate, Assistant, Language
+from .utils import translation_router
 from .misc import words
 from .handlers import words_themes_router, commands_router
-from translators import translate_text
+
+
 
 dp = Dispatcher()
 bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
@@ -55,6 +57,16 @@ async def menu(message: Message, state: FSMContext):
             language = "eng"
         case "Французька🇫🇷":
             language = "french"
+
+        case "Німецька🇩🇪":
+            language = "ger"
+
+        case "Іспанська🇪🇸":
+            language = "spain"
+
+        case "Італійська🇮🇹":
+            language = "italy"
+
     await message.answer("Натисніть на опцію: ", reply_markup=reply_keyboards.user_mode_choice)
     await state.clear()
 
@@ -115,53 +127,6 @@ async def select_mod_callback(callback_query: types.CallbackQuery, state: FSMCon
     await state.set_state(Quiz.game)
 
 
-@dp.callback_query(Translate.message_check)
-async def check_message(callback_query: types.CallbackQuery, state: FSMContext):
-    mode = callback_query.data
-    await callback_query.message.reply("Напишіть текст:")
-    await state.update_data(mod=mode)
-    await state.set_state(Translate.translation)
-
-
-@dp.message(Translate.translation)
-async def translation(message: Message, state: FSMContext):
-    mode = (await state.get_data()).get("mod")
-
-    if message.text == "❌":
-        await state.clear()
-        await message.answer("Виберіть мод: ", reply_markup=reply_keyboards.user_mode_choice)
-
-    elif message.text == "🔄️":
-        await state.clear()
-        if language == "eng":
-            await message.answer("Виберіть режим:", reply_markup=inline_keyboards.eng_translator_kbtranslator_kb)
-        elif language == "french":
-            await message.answer("Виберіть режим:", reply_markup=inline_keyboards.fr_translator_kb)
-        await state.set_state(Translate.message_check)
-
-
-    elif mode == "en_to_ua":
-        await message.reply(f"Переклад на українську мову: ")
-        await message.answer(translate_text(message.text, translator="google", from_language="en", to_language='uk'), reply_markup=reply_keyboards.translator_menu_kb)
-
-    elif mode == "ua_to_en":
-        await message.reply(f'Переклад на англійську мову: ')
-        await message.answer(translate_text(message.text, translator="google", from_languag="uk", to_language='en'), reply_markup=reply_keyboards.translator_menu_kb)
-
-    elif mode == "fr_to_ua":
-        await message.reply(f"Переклад на українську мову: ")
-        await message.answer(translate_text(message.text, translator="google", from_languag="fr", to_language='uk'), reply_markup=reply_keyboards.translator_menu_kb)
-
-    elif mode == "ua_to_fr":
-        await message.reply(f'Переклад на французську мову: ')
-        await message.answer(translate_text(message.text, translator="google", from_languag="uk", to_language='fr'), reply_markup=reply_keyboards.translator_menu_kb)
-
-        
-        
-    await message.answer("Виберіть опцію: ", reply_keyboards.translator_menu_kb)
-    await state.clear()
-
-
 @dp.message(Quiz.game)
 async def check_translation(message: Message, state: FSMContext):
     data = await state.get_data()
@@ -187,6 +152,7 @@ async def check_translation(message: Message, state: FSMContext):
         await message.reply(f"Ти помилився, переклад: {random_word[1]}", reply_markup=reply_keyboards.quiz_start)
         incorrect += 1
     await state.update_data(correct=correct, incorrect=incorrect)
+
 
 @dp.message(Assistant.response)
 async def generate_response(message: Message, state: FSMContext):        
@@ -215,6 +181,7 @@ async def generate_response(message: Message, state: FSMContext):
 
 async def start() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
+    dp.include_router(translation_router)
     dp.include_routers(words_themes_router, commands_router)
     # And the run events dispatching
     await dp.start_polling(bot)
