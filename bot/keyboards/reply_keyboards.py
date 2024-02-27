@@ -8,8 +8,17 @@ language_kb = ReplyKeyboardMarkup(keyboard=[
     ],
     [
         KeyboardButton(text="Французька🇫🇷")
+    ],
+    [
+        KeyboardButton(text="Німецька🇩🇪")
+    ],
+    [
+        KeyboardButton(text="Іспанська🇪🇸")
+    ],
+    [
+        KeyboardButton(text="Італійська🇮🇹")
     ]
-], resize_keyboard=True, input_field_placeholder="Виберіть Мову")
+], resize_keyboard= True, input_field_placeholder="Оберіть мову", one_time_keyboard=True)
 
 
 user_mode_choice = ReplyKeyboardMarkup(keyboard=[
@@ -95,7 +104,7 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
     ],
 
     [
-        KeyboardButton(text= 'Cлова На Тему Квартира 🏘')
+        KeyboardButton(text='Слова На Тему Квартира 🏘')
     ],
 
     [
@@ -108,6 +117,10 @@ themes_kb = ReplyKeyboardMarkup(keyboard=[
 
     [
         KeyboardButton(text='Слова На Тему Мода 💄')
+    ],
+
+    [
+        KeyboardButton(text='Слова На Тему Питання ❓')
     ]
 
 ], resize_keyboard=True, input_field_placeholder="Виберіть Тему", one_time_keyboard=True)

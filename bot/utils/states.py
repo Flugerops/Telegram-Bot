@@ -15,3 +15,4 @@ class Assistant(StatesGroup):
 
 class Language(StatesGroup):
     language_select = State()
+    
