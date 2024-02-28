@@ -108,11 +108,11 @@ async def leave_quiz(message: Message, state: FSMContext):
     incorrect = data.get("incorrect")
     await state.clear()
     if incorrect == 0:
-        await message.reply(f'Ви Не Помилялись В Цьому Квізі\nІ Отримали {correct} Правильних Відповідей!')
+        await message.reply(f'• Ви Не Помилялись В Цьому Квізі\n• І Отримали {correct} Правильних Відповідей!')
     elif correct == 0 and incorrect == 0:
-        await message.reply(f'Ти не відповідав в цьому квізі правильно')
+        await message.reply(f'• Ти не відповідав в цьому квізі правильно')
     else:
-        await message.reply(f"Ви Отримали {correct} Правильних Відповідей\nІ {incorrect} Неправильних Відповідей.\nЦе {int(correct / (correct + incorrect) * 100)}% Правильно.")
+        await message.reply(f"• Ви Отримали {correct} Правильних Відповідей\n•І {incorrect} Неправильних Відповідей.\n•Це {int(correct / (correct + incorrect) * 100)}% Правильно.")
     await message.answer("Виберіть мод: ", reply_markup=reply_keyboards.user_mode_choice)
 
 
