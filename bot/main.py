@@ -171,7 +171,7 @@ async def generate_response(message: Message, state: FSMContext):
                     print(response)
                     break
             response = response.result()
-            print(response)
+            print(response) 
         try:
             await message.answer(response.get("response"), reply_markup=reply_keyboards.exit_kb)
         except:
