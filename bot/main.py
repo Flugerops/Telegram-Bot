@@ -1,5 +1,7 @@
 import asyncio
+
 import logging
+
 import sys
 import requests
 from os import getenv
@@ -44,9 +46,7 @@ async def command_start_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(Language.language_select)
 
 
-# @dp.message(F.text == "Вибір Мови")
-# async def language_select(message: Message, state: FSMContext):
-#     await state.set_state(Language.language_select)
+
 
 
 @dp.message(Language.language_select)
