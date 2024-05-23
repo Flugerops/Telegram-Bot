@@ -41,7 +41,7 @@ language = None
 @dp.message(CommandStart())
 async def command_start_handler(message: Message, state: FSMContext) -> None:
     await message.answer(f"Привіт, {hbold(message.from_user.full_name)}!")
-    await message.answer("Я буду допомогати вивчати тобі різні мови", reply_markup=reply_keyboards.language_kb)
+    await message.answer("Я буду допомогати вивчати тобі різні мови!", reply_markup=reply_keyboards.language_kb)
     await state.update_data(correct=0, incorrect=0)
     await state.set_state(Language.language_select)
 
